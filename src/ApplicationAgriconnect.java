@@ -23,7 +23,7 @@ public class ApplicationAgriconnect {
 
         // Boucle de temporisation pour effectuer les mesures à intervalles réguliers
         try {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
             //while (true) {
                 Thread.sleep(intervalleMesure);
 
