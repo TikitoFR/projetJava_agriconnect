@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 public class CentraleDeGestion {
     private List<Capteur> capteurs = new ArrayList<>();
 
@@ -17,6 +19,13 @@ public class CentraleDeGestion {
     }
 
     public void enregistrerMesures(Capteur capteur, double temperature, double humidite) {
-        System.out.println("Mesures du capteur " + capteur.codeUnique + " - Température : " + temperature + ", Humidité : " + humidite);
+        String result = "Mesures du capteur " + capteur.codeUnique + " - Température : " + temperature + ", Humidité : " + humidite;
+        System.out.println(result);
+
+        try (FileWriter writer = new FileWriter("result.txt", true)) {
+            writer.write(result + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
