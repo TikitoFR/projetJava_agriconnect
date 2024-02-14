@@ -1,0 +1,3 @@
+Mesures du capteurs Capteur1 - Température : 20.0, Humidité : 50.0
+Mesures du capteurs Capteur1 - Température : 20.0, Humidité : 50.0
+Mesures du capteurs Capteur1 - Température : 20.0, Humidité : 50.0

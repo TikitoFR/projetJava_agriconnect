@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class ApplicationAgriconnect {
     public static void main(String[] args) {
-        CentraleDeGestion centrale = new CentraleDeGestion();
+        ServeurCentraleDeGestion centrale = new ServeurCentraleDeGestion();
 
         // Création de 5 capteurs
         Capteur capteur1 = new Capteur("C001", "GPS1");
