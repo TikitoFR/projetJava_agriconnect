@@ -12,7 +12,7 @@ public class CentraleDeGestion {
     }
 
     public void afficherInformationsCapteur(Capteur capteur) {
-        System.out.println("Informations du capteur " + capteur.codeUnique);
+        System.out.println("Informations du capteur, code unique : " + capteur.codeUnique + ", Coordonnées GPS : " + capteur.coordonneesGPS);
         // Afficher d'autres informations si nécessaire
     }
 
