@@ -1,0 +1,63 @@
+<mxfile host="app.diagrams.net" modified="2024-02-14T16:34:35.047Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="kg17t2UP4JErgenHeVZP" version="23.1.4" type="github">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1430" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--0" value="Capteur" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="220" y="120" width="480" height="160" as="geometry">
+            <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--25" value="- codeUnique: String&#xa;- coordonneesGPS: String" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
+          <mxGeometry y="26" width="480" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--4" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--0" vertex="1">
+          <mxGeometry y="60" width="480" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-5" value="+ Capteur(codeUnique: String, coordonneesGPS: String)&#xa;+ demarrer(centrale: CentraleDeGestion): void &#xa;+ retirer(centrale: CentraleDeGestion): void&#xa;+ mesurer(centrale: CentraleDeGestion, temperature: double, humidite: double): void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="zkfFHV4jXpPFQw0GAbJ--0">
+          <mxGeometry y="80" width="480" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--17" value="Centrale de gestion" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="220" y="310" width="480" height="210" as="geometry">
+            <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-6" value="- capteurs: List&lt;Capteur&gt;&#xa;- actionneurs: List&lt;Actionneur&gt;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="zkfFHV4jXpPFQw0GAbJ--17">
+          <mxGeometry y="26" width="480" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="zkfFHV4jXpPFQw0GAbJ--23" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="zkfFHV4jXpPFQw0GAbJ--17" vertex="1">
+          <mxGeometry y="70" width="480" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-7" value="+ ajouterCapteur(capteur: Capteur): void&#xa;+ retirerCapteur(capteur: Capteur): void &#xa;+ enregistrerMesures(capteur: Capteur, temperature: double, humidite: double): void&#xa;+ ajouterActionneur(actionneur: Actionneur): void&#xa;+ retirerActionneur(actionneur: Actionneur): void&#xa;+ declencherArrosage(): void&#xa;+ obtenirEtatArrosage(): String" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="zkfFHV4jXpPFQw0GAbJ--17">
+          <mxGeometry y="90" width="480" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-8" value="Actionneur" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="220" y="550" width="270" height="170" as="geometry">
+            <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-9" value="- codeUnique: String&#xa;- coordonneesGPS: String" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="fo2IXumNde_vxtxr7bFM-8">
+          <mxGeometry y="26" width="270" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-10" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="fo2IXumNde_vxtxr7bFM-8">
+          <mxGeometry y="60" width="270" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-11" value="+ demarrer(centrale: CentraleDeGestion): void &#xa;+ retirer(centrale: CentraleDeGestion): void&#xa;+ activerArrosage(duree: int): void &#xa;+ desactiverArrosage(): void &#xa;+ obtenirEtatArrosage(): String " style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="fo2IXumNde_vxtxr7bFM-8">
+          <mxGeometry y="80" width="270" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-12" value="ApplicationClient" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="220" y="740" width="480" height="210" as="geometry">
+            <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-14" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="fo2IXumNde_vxtxr7bFM-12">
+          <mxGeometry y="26" width="480" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="fo2IXumNde_vxtxr7bFM-15" value="+ listerCapteurs(): List&lt;Capteur&gt; &#xa;+ obtenirDernieresInformationsCapteur(capteur: Capteur): String &#xa;+ obtenirMoyenneTendances(type: String, periode: String): String &#xa;+ modifierIntervallesMesure(capteur: Capteur, intervalle: int): void&#xa;+ declarerCapteur(codeUnique: String, coordonneesGPS: String): void&#xa;+ retirerCapteur(codeUnique: String): void&#xa;+ declarerActionneur(codeUnique: String, coordonneesGPS: String): void&#xa;+ retirerActionneur(codeUnique: String): void&#xa;+ declencherArrosageManuel(duree: int): void&#xa;+ obtenirEtatArrosage(): String &#xa;" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="fo2IXumNde_vxtxr7bFM-12">
+          <mxGeometry y="46" width="480" height="164" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
