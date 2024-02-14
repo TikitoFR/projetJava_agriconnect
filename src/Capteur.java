@@ -9,12 +9,12 @@ public class Capteur {
 
     public void demarrer(CentraleDeGestion centrale) {
         centrale.ajouterCapteur(this);
-        System.out.println("Capteur démarré : " + codeUnique);
+        System.out.println("Capteur démarré : " + codeUnique + ", Coordonnées GPS : " + coordonneesGPS);
     }
 
     public void retirer(CentraleDeGestion centrale) {
         centrale.retirerCapteur(this);
-        System.out.println("Capteur retiré : " + codeUnique);
+        System.out.println("Capteur retiré : " + codeUnique + ", Coordonnées GPS : " + coordonneesGPS);
     }
 
     public void mesurer(CentraleDeGestion centrale, double temperature, double humidite) {
