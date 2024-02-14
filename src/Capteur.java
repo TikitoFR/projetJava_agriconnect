@@ -11,6 +11,7 @@ public class Capteur {
         this.centrale = centrale;
     }
 
+<<<<<<< HEAD
     public void demarrer() throws RemoteException {
         centrale.ajouterCapteur(this.codeUnique);
         System.out.println("Capteur démarré : " + codeUnique);
@@ -19,6 +20,16 @@ public class Capteur {
     public void retirer() throws RemoteException {
         centrale.retirerCapteur(this.codeUnique);
         System.out.println("Capteur retiré : " + codeUnique);
+=======
+    public void demarrer(CentraleDeGestion centrale) {
+        centrale.ajouterCapteur(this);
+        System.out.println("Capteur démarré : " + codeUnique + ", Coordonnées GPS : " + coordonneesGPS);
+    }
+
+    public void retirer(CentraleDeGestion centrale) {
+        centrale.retirerCapteur(this);
+        System.out.println("Capteur retiré : " + codeUnique + ", Coordonnées GPS : " + coordonneesGPS);
+>>>>>>> master
     }
 
     public void mesurer(double temperature, double humidite) throws RemoteException {
