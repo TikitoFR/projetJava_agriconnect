@@ -1,5 +1,8 @@
 import java.util.Random;
 
+import Capteur.Capteur;
+import CentralDeGestion.ServeurCentraleDeGestion;
+
 public class ApplicationAgriconnect {
     public static void main(String[] args) {
         ServeurCentraleDeGestion centrale = new ServeurCentraleDeGestion();

@@ -1,3 +1,4 @@
+package CentralDeGestion;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -5,6 +6,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import Capteur.DataCapteur;
+
 import java.nio.charset.StandardCharsets;
 
 public class CentraleGestionimpl extends UnicastRemoteObject implements CentraleGestion{

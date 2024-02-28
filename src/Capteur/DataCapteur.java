@@ -1,3 +1,4 @@
+package Capteur;
 public class DataCapteur implements java.io.Serializable{
     public double temperature;
     public double humidite;

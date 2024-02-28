@@ -1,5 +1,8 @@
+package CentralDeGestion;
 import java.util.ArrayList;
 import java.util.List;
+
+import Capteur.Capteur;
 public class CentraleDeGestion {
     private List<Capteur> capteurs = new ArrayList<>();
 
