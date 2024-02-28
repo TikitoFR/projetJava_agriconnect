@@ -43,5 +43,4 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             e.printStackTrace();
         }
     }
-
 }
