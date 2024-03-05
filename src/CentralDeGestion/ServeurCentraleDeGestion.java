@@ -17,6 +17,12 @@ public class ServeurCentraleDeGestion {
                 java.rmi.registry.LocateRegistry.createRegistry(1099);
                 java.rmi.Naming.bind("rmi://localhost:1099/CentraleGestion", dfg);
                 System.out.println("Serveur prêt");
+
+
+
+
+
+
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -34,11 +40,9 @@ public class ServeurCentraleDeGestion {
                     e1.printStackTrace();
                 }
             }
-
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-                
-}
+    }
 }
