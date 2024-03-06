@@ -2,6 +2,7 @@ package Capteur;
 
 import CentralDeGestion.CentraleGestion;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -18,6 +19,7 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
     public void parametrerCapteur(CentraleGestion centrale, int intervalle) throws RemoteException {
         capteur.centrale=centrale;
         capteur.intervalle=intervalle;
+        System.out.println("Capteur paramétré pour : " + capteur.codeUnique);
     }
 
     @Override
