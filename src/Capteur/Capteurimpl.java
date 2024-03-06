@@ -10,8 +10,9 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
     private Capteur capteur;
     private Thread mesure;
 
-    public Capteurimpl() throws RemoteException {
+    public Capteurimpl(Capteur capteur) throws RemoteException {
         super();
+        this.capteur=capteur;
     }
 
     @Override
