@@ -2356,3 +2356,5 @@ Mesures du capteurs hPu - Température : 10.0, Humidité : 10.0
 Mesures du capteurs hPu - Température : 10.0, Humidité : 10.0
 Mesures du capteurs hPu - Température : 10.0, Humidité : 10.0
 Mesures du capteurs hPu - Température : 10.0, Humidité : 10.0
+Mesures du capteurs y4v - Température : 10.0, Humidité : 10.0
+Mesures du capteurs y4v - Température : 10.0, Humidité : 10.0

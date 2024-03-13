@@ -4,40 +4,42 @@ package CentralDeGestion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class InsertData {
     public static void main(String[] args) {
         // Paramètres de connexion
-        String url = "jdbc:mysql://localhost:3306/CapteursDB";
+        String url = "jdbc:mysql://localhost:3306/projet";
         String user = "root";
-        String password = "azerazer";
+        String password = "azer";
 
         try {
-            // Établir la connexion
-            Class.forName(".idea/ojdbc11.jar");
-
-            Connection conn = DriverManager.getConnection(url, user, password);
 
             // La requête SQL pour l'insertion
-            String sql = "INSERT INTO nom_de_la_table (nom_du_capteur, temperature, humidite, intervalle) VALUES (?, ?, ?, ?)";
 
-            // Préparer la requête
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, "NomDuCapteurUnique");
-            statement.setFloat(2, 25.5f); // Température exemple
-            statement.setFloat(3, 60.0f); // Humidité exemple
-            statement.setInt(4, 10); // Intervalle exemple
-
-            // Exécuter la requête
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Une nouvelle entrée a été insérée avec succès !");
+            try (Connection conn = DriverManager.getConnection(url, user, password)) {
+                String query = "INSERT INTO Capteur (codeUnique, coordonneesGPS, messureTemperature, messureHumidite) VALUES (?, ?, ?, ?)";
+    
+                try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                    preparedStatement.setString(1, "Code123");
+                    preparedStatement.setString(2, "48.8566, 2.3522"); // Exemple de coordonnées GPS pour Paris
+                    preparedStatement.setBigDecimal(3, new java.math.BigDecimal("23.00")); // Température
+                    preparedStatement.setBigDecimal(4, new java.math.BigDecimal("75.00")); // Humidité
+    
+                    int result = preparedStatement.executeUpdate();
+    
+                    if (result > 0) {
+                        System.out.println("Une ligne insérée avec succès.");
+                    } else {
+                        System.out.println("Aucune ligne insérée.");
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Erreur d'insertion: " + e.getMessage());
             }
-
-            // Fermer la connexion
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
+    catch (Exception e) {
+        System.out.println("Erreur de connexion: " + e.getMessage());
+    }
+}
 }
