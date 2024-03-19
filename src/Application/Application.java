@@ -1,8 +1,14 @@
 package Application;
 
 import Capteur.Capteur;
+import CentralDeGestion.CentraleGestion;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.sql.*;
+import java.util.Scanner;
 
 public class Application {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
@@ -44,10 +50,64 @@ public class Application {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
 
-            afficherCapteur(conn);
-            afficherMesures(conn, "Capteur2");
+            CentraleGestion centrale = (CentraleGestion) Naming.lookup("rmi://localhost:1099/CentraleGestion");
+
+            Scanner scanner = new Scanner(System.in);
+
+            boolean quitter = false;
+            while (!quitter) {
+                System.out.println("Menu:");
+                System.out.println("1. Lister les capteurs connecté sur la centrale");
+                System.out.println("1. Lister les capteurs enregistré dans la BDD");
+                System.out.println("2. Obtenir les mesures d'un capteur");
+                System.out.println("3. Modifier intervalle de mesure pour un capteur");
+                System.out.println("4. Ajouter un capteur");
+                System.out.println("5. Activer un capteur");
+                System.out.println("6. Désactiver un capteur");
+                System.out.println("7. Calculer la moyenne et la tendance pour un capteur");
+                System.out.println("5. Quitter");
+                System.out.print("Votre choix: ");
+
+                int choix = scanner.nextInt();
+                scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
+
+                switch (choix) {
+                    case 1:
+                        centrale.getCapteurs();
+                        break;
+                    case 2:
+                        afficherCapteur(conn);
+                        break;
+                    case 3:
+                        System.out.print("Entrez le code unique du capteur: ");
+                        String codeCapteur = scanner.nextLine();
+                        afficherMesures(conn, codeCapteur);
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+                        System.out.println("Entrez le nom du capteur :");
+                        String nomCapteur = scanner.nextLine(); // Lire la saisie utilisateur
+
+                        break;
+                    case 6:
+                        quitter = true;
+                        break;
+                    default:
+                        System.out.println("Choix invalide, veuillez réessayer.");
+                }
+            }
+
+            conn.close(); // Fermer la connexion à la base de données
 
         } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }

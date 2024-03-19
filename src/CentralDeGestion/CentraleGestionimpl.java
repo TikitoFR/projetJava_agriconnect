@@ -43,4 +43,8 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             e.printStackTrace();
         }
     }
+
+    public HashMap<String, List<DataCapteur>> getCapteurs() throws RemoteException {
+        return this.capteurs;
+    }
 }
