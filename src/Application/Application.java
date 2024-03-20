@@ -2,18 +2,25 @@ package Application;
 
 import Capteur.Capteur;
 import CentralDeGestion.CentraleGestion;
+import Capteur.DataCapteur;
+import Capteur.CapteurInterface;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "passroot";
+
+    private static CentraleGestion centrale;
 
     public static void afficherCapteur(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
@@ -44,13 +51,21 @@ public class Application {
         }
     }
 
+    public static void listerCapteurs() throws RemoteException {
+        System.out.println("Liste des capteurs:");
+        List<String>  listeCapteur = centrale.getNomCapteurs();
+        for(int i=0; i<listeCapteur.size(); i++){
+            System.out.println(listeCapteur.get(i));
+        }
+    }
+
 
     public static void main(String[] args) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
 
-            CentraleGestion centrale = (CentraleGestion) Naming.lookup("rmi://localhost:1099/CentraleGestion");
+            centrale = (CentraleGestion) Naming.lookup("rmi://localhost:1099/CentraleGestion");
 
             Scanner scanner = new Scanner(System.in);
 
@@ -73,7 +88,7 @@ public class Application {
 
                 switch (choix) {
                     case 1:
-                        centrale.getCapteurs();
+                        listerCapteurs();
                         break;
                     case 2:
                         afficherCapteur(conn);

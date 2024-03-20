@@ -34,7 +34,7 @@ public class ServeurCentraleDeGestion {
                     CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
 
                     capteur.parametrerCapteur(centrale,5000);
-                    centraleGestionimpl.ajouterCapteur(nomCapteur);
+                    centraleGestionimpl.ajouterCapteur(nomCapteur, capteur);
                     capteur.demarrerMesure();
 
                 } catch (NotBoundException e) {

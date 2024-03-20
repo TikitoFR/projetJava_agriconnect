@@ -15,6 +15,10 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
         this.capteur=capteur;
     }
 
+    public String getNom() throws RemoteException{
+        return capteur.getNom();
+    }
+
     @Override
     public void parametrerCapteur(CentraleGestion centrale, int intervalle) throws RemoteException {
         capteur.centrale=centrale;

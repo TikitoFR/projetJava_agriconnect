@@ -11,6 +11,9 @@ public class Capteur implements Runnable {
 
     public boolean statusCapteur;
 
+    public String getNom() {
+        return this.codeUnique;
+    }
     public Capteur(String codeUnique, String coordonneesGPS) {
         this.codeUnique = codeUnique;
         this.coordonneesGPS = coordonneesGPS;
@@ -18,7 +21,6 @@ public class Capteur implements Runnable {
 
     public void mesurer(double temperature, double humidite) throws RemoteException {
         centrale.enregistrerMesures(new DataCapteur(temperature, humidite, this.codeUnique));
-        //chose a imaginé a renvoyé au main pour tester plusieur fois la fonction
     }
 
     @Override
