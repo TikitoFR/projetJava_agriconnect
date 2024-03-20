@@ -1,6 +1,9 @@
 package CentralDeGestion;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -23,12 +26,24 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         super();
         this.capteurs = new HashMap<>();
     }
-
-/*    public void ajouterCapteur(String capteur) {
+    /*
+    public void ajouterCapteur(String capteur) {
         capteurs.put(capteur, new ArrayList<>());
-    }*/
-    public void ajouterCapteur(String nameCapteur, CapteurInterface capteur) {
-        capteurs.put(nameCapteur, capteur);
+    }
+    */
+    public void ajouterCapteur(String nomCapteur, CentraleGestion centrale, int intervalle) {
+        try {
+            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
+            capteurs.put(nomCapteur, capteur);
+            capteur.parametrerCapteur(centrale, intervalle);
+            capteur.demarrerMesure();
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void retirerCapteur(String capteur) {

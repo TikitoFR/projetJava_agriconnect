@@ -99,11 +99,13 @@ public class Application {
                         afficherMesures(conn, codeCapteur);
                         break;
                     case 4:
-
+                        System.out.print("Entrez le code unique du capteur : ");
+                        String nomCapteur = scanner.nextLine();
+                        System.out.print("Entrez l'intervalle de mesure : ");
+                        int intervalle = Integer.parseInt(scanner.nextLine());
+                        centrale.ajouterCapteur(nomCapteur, centrale, intervalle);
                         break;
                     case 5:
-                        System.out.println("Entrez le nom du capteur :");
-                        String nomCapteur = scanner.nextLine(); // Lire la saisie utilisateur
 
                         break;
                     case 6:
