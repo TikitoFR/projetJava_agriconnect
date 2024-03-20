@@ -19,18 +19,13 @@ import java.util.Map;
 
 public class CentraleGestionimpl extends UnicastRemoteObject implements CentraleGestion{
 
-    //private HashMap<String,List<DataCapteur>> capteurs;
     private HashMap<String, CapteurInterface> capteurs;
 
     public CentraleGestionimpl() throws RemoteException {
         super();
         this.capteurs = new HashMap<>();
     }
-    /*
-    public void ajouterCapteur(String capteur) {
-        capteurs.put(capteur, new ArrayList<>());
-    }
-    */
+
     public void ajouterCapteur(String nomCapteur, CentraleGestion centrale, int intervalle) {
         try {
             CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
@@ -46,13 +41,71 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         }
     }
 
-    public void retirerCapteur(String capteur) {
-        capteurs.remove(capteur);
+    public void retirerCapteur(String nomCapteur) {
+        try {
+            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
+            capteurs.remove(nomCapteur);
+            capteur.retirerCapteur();
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void demarrerMesure(String nomCapteur) {
+        CapteurInterface capteur = null;
+        try {
+            capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
+            capteur.demarrerMesure();
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void afficherInformationsCapteur(String capteur) {
-        System.out.println("Informations du capteur " + capteur);
-        // Afficher d'autres informations si nécessaire
+    public void arreterMesure(String nomCapteur) {
+        CapteurInterface capteur = null;
+        try {
+            capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
+            capteur.arreterMesure();
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void modifierIntervalle(String nomCapteur, int intervalle) {
+        try {
+            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/" + nomCapteur);
+            capteur.modifierIntervalle(intervalle);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> afficherInformationsCapteur(String nomCapteur) throws RemoteException {
+        List<String> listeCapteurs = new ArrayList<String>();
+        this.capteurs.get(nomCapteur);
+        if (this.capteurs.containsKey(nomCapteur)) {
+            if (this.capteurs.get(nomCapteur).getStatus()) {
+                listeCapteurs.add(nomCapteur + " - GPS : " + this.capteurs.get(nomCapteur).getCoordonneesGPS() + " - Intervalle : " + this.capteurs.get(nomCapteur).getIntervalle() +  " - Actif");
+            } else {
+                listeCapteurs.add(nomCapteur + " - GPS : " + this.capteurs.get(nomCapteur).getCoordonneesGPS() + " - Intervalle : " + this.capteurs.get(nomCapteur).getIntervalle() +  " - Inactif");
+            }
+        }
+        return listeCapteurs;
     }
 
     public void enregistrerMesures(DataCapteur data) {
@@ -66,15 +119,19 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 //        }
     }
 
-    public List<String> getNomCapteurs() throws RemoteException {
-        List<String> listeNomCapteurs = new ArrayList<String>();
+    public List<String> getCapteurs() throws RemoteException {
+        List<String> listeCapteurs = new ArrayList<String>();
         this.capteurs.forEach((nomCapteur, capteur)->{
             try {
-                listeNomCapteurs.add(capteur.getNom());
+                if (capteur.getStatus()) {
+                    listeCapteurs.add(capteur.getNom() + " - GPS : " + capteur.getCoordonneesGPS() + " - Intervalle : " + capteur.getIntervalle() + " - Actif");
+                } else {
+                    listeCapteurs.add(capteur.getNom() + " - GPS : " + capteur.getCoordonneesGPS() + " - Intervalle : " + capteur.getIntervalle() + " - Inactif");
+                }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         });
-        return listeNomCapteurs;
+        return listeCapteurs;
     }
 }

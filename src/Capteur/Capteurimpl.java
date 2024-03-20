@@ -19,6 +19,18 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
         return capteur.getNom();
     }
 
+    public String getCoordonneesGPS() throws RemoteException{
+        return capteur.getCoordonneesGPS();
+    }
+
+    public int getIntervalle() throws RemoteException{
+        return capteur.getIntervalle();
+    }
+
+    public boolean getStatus() throws RemoteException{
+        return capteur.getStatus();
+    }
+
     @Override
     public void parametrerCapteur(CentraleGestion centrale, int intervalle) throws RemoteException {
         capteur.centrale=centrale;
@@ -38,7 +50,9 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
 
     @Override
     public void arreterMesure() throws RemoteException {
-        capteur.statusCapteur=false;
+        capteur.statusCapteur = false;
+        System.out.println("Mesure arrété pour : " + capteur.codeUnique);
+        //mesure.interrupt();
     }
 
     @Override

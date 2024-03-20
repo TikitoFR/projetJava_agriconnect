@@ -12,7 +12,6 @@ public class ServeurCapteur {
         Capteur capteur1 = new Capteur("Capteur1", "48.8566, 2.3522");
         try {
             Capteurimpl capteurImpl = new Capteurimpl(capteur1);
-
             try {
                 java.rmi.Naming.bind("rmi://localhost:1099/Capteur1", capteurImpl);
                 System.out.println("Serveur prêt");
@@ -29,7 +28,6 @@ public class ServeurCapteur {
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
-
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

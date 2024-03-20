@@ -1,18 +1,13 @@
 package Application;
 
-import Capteur.Capteur;
 import CentralDeGestion.CentraleGestion;
-import Capteur.DataCapteur;
-import Capteur.CapteurInterface;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
@@ -53,12 +48,11 @@ public class Application {
 
     public static void listerCapteurs() throws RemoteException {
         System.out.println("Liste des capteurs:");
-        List<String>  listeCapteur = centrale.getNomCapteurs();
+        List<String>  listeCapteur = centrale.getCapteurs();
         for(int i=0; i<listeCapteur.size(); i++){
             System.out.println(listeCapteur.get(i));
         }
     }
-
 
     public static void main(String[] args) {
         try {
@@ -72,15 +66,28 @@ public class Application {
             boolean quitter = false;
             while (!quitter) {
                 System.out.println("Menu:");
+                System.out.println("-------------------------------------------------");
                 System.out.println("1. Lister les capteurs connecté sur la centrale");
-                System.out.println("1. Lister les capteurs enregistré dans la BDD");
-                System.out.println("2. Obtenir les mesures d'un capteur");
-                System.out.println("3. Modifier intervalle de mesure pour un capteur");
-                System.out.println("4. Ajouter un capteur");
-                System.out.println("5. Activer un capteur");
-                System.out.println("6. Désactiver un capteur");
-                System.out.println("7. Calculer la moyenne et la tendance pour un capteur");
-                System.out.println("5. Quitter");
+                System.out.println("-------------------------------------------------");
+                System.out.println("2. Lister les capteurs enregistré dans la BDD");
+                System.out.println("-------------------------------------------------");
+                System.out.println("3. Obtenir les mesures d'un capteur depuis la BDD");
+                System.out.println("-------------------------------------------------");
+                System.out.println("4. Afficher les infos d'un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("5. Modifier intervalle de mesure pour un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("6. Ajouter un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("7. Activer un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("8. Retirer un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("9. Désactiver un capteur");
+                System.out.println("-------------------------------------------------");
+                //System.out.println("10. Calculer la moyenne et la tendance pour un capteur"); // A faire
+                System.out.println("11. Quitter");
+                System.out.println("-------------------------------------------------");
                 System.out.print("Votre choix: ");
 
                 int choix = scanner.nextInt();
@@ -101,21 +108,48 @@ public class Application {
                     case 4:
                         System.out.print("Entrez le code unique du capteur : ");
                         String nomCapteur = scanner.nextLine();
-                        System.out.print("Entrez l'intervalle de mesure : ");
-                        int intervalle = Integer.parseInt(scanner.nextLine());
-                        centrale.ajouterCapteur(nomCapteur, centrale, intervalle);
+                        List<String> listeCapteur = centrale.afficherInformationsCapteur(nomCapteur);
+                        System.out.println(listeCapteur.get(0));
                         break;
                     case 5:
-
+                        System.out.print("Entrez le code unique du capteur : ");
+                        nomCapteur = scanner.nextLine();
+                        System.out.print("Entrez l'intervalle de mesure : ");
+                        int intervalle = Integer.parseInt(scanner.nextLine());
+                        centrale.modifierIntervalle(nomCapteur, intervalle);
                         break;
                     case 6:
+                        System.out.print("Entrez le code unique du capteur : ");
+                        nomCapteur = scanner.nextLine();
+                        System.out.print("Entrez l'intervalle de mesure : ");
+                        intervalle = Integer.parseInt(scanner.nextLine());
+                        centrale.ajouterCapteur(nomCapteur, centrale, intervalle);
+                        break;
+                    case 7:
+                        System.out.print("Entrez le code unique du capteur : ");
+                        nomCapteur = scanner.nextLine();
+                        centrale.demarrerMesure(nomCapteur);
+                        break;
+                    case 8:
+                        System.out.print("Entrez le code unique du capteur : ");
+                        nomCapteur = scanner.nextLine();
+                        centrale.retirerCapteur(nomCapteur);
+                        break;
+                    case 9:
+                        System.out.print("Entrez le code unique du capteur : ");
+                        nomCapteur = scanner.nextLine();
+                        centrale.arreterMesure(nomCapteur);
+                        break;
+                    case 10:
+                        // A faire
+                        break;
+                    case 11:
                         quitter = true;
                         break;
                     default:
                         System.out.println("Choix invalide, veuillez réessayer.");
                 }
             }
-
             conn.close(); // Fermer la connexion à la base de données
 
         } catch (ClassNotFoundException | SQLException e) {
