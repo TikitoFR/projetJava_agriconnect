@@ -28,6 +28,7 @@ public class Capteur implements Runnable {
 
     public void mesurer(double temperature, double humidite) throws RemoteException {
         centrale.enregistrerMesures(new DataCapteur(temperature, humidite, this.codeUnique));
+        centrale.afficherMesures(new DataCapteur(temperature, humidite, this.codeUnique));
     }
 
     @Override

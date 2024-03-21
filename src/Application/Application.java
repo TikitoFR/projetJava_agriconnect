@@ -73,7 +73,7 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("3. Obtenir les mesures d'un capteur depuis la BDD");
                 System.out.println("-------------------------------------------------");
-                System.out.println("4. Afficher les infos d'un capteur");
+                System.out.println("4. Afficher les infos d'un capteur depuis la centrale");
                 System.out.println("-------------------------------------------------");
                 System.out.println("5. Modifier intervalle de mesure pour un capteur");
                 System.out.println("-------------------------------------------------");
@@ -91,7 +91,7 @@ public class Application {
                 System.out.print("Votre choix: ");
 
                 int choix = scanner.nextInt();
-                scanner.nextLine(); // Pour consommer la nouvelle ligne après nextInt()
+                scanner.nextLine();
 
                 switch (choix) {
                     case 1:
@@ -144,6 +144,9 @@ public class Application {
                         // A faire
                         break;
                     case 11:
+                        //centrale.afficherMesures();
+                        break;
+                    case 12:
                         quitter = true;
                         break;
                     default:

@@ -1,6 +1,4 @@
 package CentralDeGestion;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -10,12 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Capteur.Capteur;
 import Capteur.DataCapteur;
 import Capteur.CapteurInterface;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 public class CentraleGestionimpl extends UnicastRemoteObject implements CentraleGestion{
 
@@ -106,6 +100,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             }
         }
         return listeCapteurs;
+    }
+
+    public void afficherMesures(DataCapteur data) {
+        System.out.println(data);
     }
 
     public void enregistrerMesures(DataCapteur data) {
