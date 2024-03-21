@@ -15,6 +15,8 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     private HashMap<String, CapteurInterface> capteurs;
 
+    private DataCapteur derniereData;
+
     public CentraleGestionimpl() throws RemoteException {
         super();
         this.capteurs = new HashMap<>();
@@ -103,7 +105,18 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     }
 
     public void afficherMesures(DataCapteur data) {
-        System.out.println(data);
+        //System.out.println(data);
+        this.derniereData = data;
+        System.out.println(derniereData);
+    }
+
+    public DataCapteur getMesures() {
+        try {
+            wait(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return derniereData;
     }
 
     public void enregistrerMesures(DataCapteur data) {

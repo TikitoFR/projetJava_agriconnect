@@ -1,5 +1,6 @@
 package Application;
 
+import Capteur.DataCapteur;
 import CentralDeGestion.CentraleGestion;
 
 import java.net.MalformedURLException;
@@ -51,6 +52,19 @@ public class Application {
         List<String>  listeCapteur = centrale.getCapteurs();
         for(int i=0; i<listeCapteur.size(); i++){
             System.out.println(listeCapteur.get(i));
+        }
+    }
+
+    public static void getMesures() throws RemoteException {
+
+        Scanner scanner = new Scanner(System.in);
+        boolean continuer = true;
+
+        System.out.println("Appuyez sur une touche pour arrêter la récupération des mesures...");
+        String input = scanner.nextLine();
+        while (input.isEmpty()) {
+            DataCapteur data = centrale.getMesures();
+            System.out.println(data);
         }
     }
 
@@ -144,7 +158,7 @@ public class Application {
                         // A faire
                         break;
                     case 11:
-                        //centrale.afficherMesures();
+                        getMesures();
                         break;
                     case 12:
                         quitter = true;

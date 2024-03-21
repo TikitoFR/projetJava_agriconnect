@@ -1,9 +1,6 @@
 package CentralDeGestion;
-import Capteur.Capteur;
 import Capteur.DataCapteur;
-import Capteur.CapteurInterface;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface CentraleGestion extends java.rmi.Remote {
@@ -16,4 +13,5 @@ public interface CentraleGestion extends java.rmi.Remote {
     public void modifierIntervalle(String nomCapteur, int intervalle) throws java.rmi.RemoteException;
     public List<String> afficherInformationsCapteur(String nomCapteur) throws java.rmi.RemoteException;
     public void afficherMesures(DataCapteur data) throws java.rmi.RemoteException;
+    public DataCapteur getMesures() throws java.rmi.RemoteException;
 }
