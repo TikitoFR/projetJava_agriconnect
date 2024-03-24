@@ -9,6 +9,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Application {
@@ -55,18 +56,42 @@ public class Application {
         }
     }
 
+//    public static void getMesures() throws RemoteException {
+//
+//        Scanner scanner = new Scanner(System.in);
+//        boolean continuer = true;
+//
+//        System.out.println("Appuyez sur une touche pour arrêter la récupération des mesures...");
+//        String input = scanner.nextLine();
+//        while (input.isEmpty()) {
+//            DataCapteur data = centrale.getMesures();
+//            System.out.println(data);
+//        }
+//    }
+
     public static void getMesures() throws RemoteException {
 
         Scanner scanner = new Scanner(System.in);
         boolean continuer = true;
+        String dernierData = null;
 
-        System.out.println("Appuyez sur une touche pour arrêter la récupération des mesures...");
+        System.out.println("Appuyez sur Entrée pour actualiser la récupération des mesures...");
+        System.out.println("Entrer un caractere et appuyer sur entrée pour quitter");
         String input = scanner.nextLine();
         while (input.isEmpty()) {
             DataCapteur data = centrale.getMesures();
-            System.out.println(data);
+            String nouvelleData = data.toString();
+
+            // Vérifier si la nouvelle data est différente de la dernière
+            if (!Objects.equals(nouvelleData, dernierData)) {
+                System.out.println(nouvelleData);
+                dernierData = nouvelleData; // Mettre à jour le dernierData
+            }
+
+            input = scanner.nextLine(); // Attendre la prochaine entrée
         }
     }
+
 
     public static void main(String[] args) {
         try {

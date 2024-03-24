@@ -8,6 +8,10 @@ public class DataCapteur implements java.io.Serializable{
 
     public double getHumidite() {return this.humidite;}
 
+    public String getCodeUnique() {
+        return codeUnique;
+    }
+
     public DataCapteur(double temperature, double humidite, String codeUnique) {
         this.temperature = temperature;
         this.humidite = humidite;

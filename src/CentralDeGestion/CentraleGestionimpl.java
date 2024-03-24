@@ -7,11 +7,21 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import Capteur.DataCapteur;
 import Capteur.CapteurInterface;
 
 public class CentraleGestionimpl extends UnicastRemoteObject implements CentraleGestion{
+
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "passroot";
 
     private HashMap<String, CapteurInterface> capteurs;
 
@@ -111,23 +121,36 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     }
 
     public DataCapteur getMesures() {
-        try {
-            wait(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return derniereData;
     }
 
-    public void enregistrerMesures(DataCapteur data) {
-//        System.out.println(data);
-//        capteurs.get(data.codeUnique).add(data);
-//
-//        try (FileWriter writer = new FileWriter("result.txt", StandardCharsets.UTF_8, true)) {
-//            writer.write(data + "\n");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
+    public void enregistrerMesures(DataCapteur data ) {
+        System.out.println(data.getTemperature() + " " + data.getHumidite() + " " + data.getCodeUnique());
+
+        // Requête SQL pour insérer des données, y compris la date et l'heure actuelles
+        String query = "INSERT INTO Mesure (codeUnique, dateHeure, temperature, humidite) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Récupérer la date et l'heure actuelles
+            LocalDateTime now = LocalDateTime.now();
+            // Formater la date et l'heure au format attendu par votre base de données
+            String formattedDateTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+            preparedStatement.setString(1, data.getCodeUnique()); // Code unique
+            preparedStatement.setString(2, formattedDateTime); // Date et heure actuelles formatées
+            preparedStatement.setBigDecimal(3, new java.math.BigDecimal(data.getTemperature())); // Température
+            preparedStatement.setBigDecimal(4, new java.math.BigDecimal(data.getHumidite())); // Humidité
+
+            // Exécuter l'insertion
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println(rowsAffected + " ligne(s) insérée(s).");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<String> getCapteurs() throws RemoteException {

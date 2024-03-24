@@ -1,5 +1,6 @@
 package Capteur;
 import java.rmi.RemoteException;
+import java.util.Random;
 
 import CentralDeGestion.CentraleGestion;
 
@@ -36,7 +37,9 @@ public class Capteur implements Runnable {
         while(true) {
             while (statusCapteur) {
                 try {
-                    mesurer(10, 10);
+                    Random rand = new Random();
+                    int plage = 100 - (-20) + 1; // plage de -20 à 100
+                    mesurer(rand.nextInt(plage) - 20, rand.nextInt(101));
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
