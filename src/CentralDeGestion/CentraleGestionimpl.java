@@ -38,6 +38,26 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             capteurs.put(nomCapteur, capteur);
             capteur.parametrerCapteur(centrale, intervalle);
             capteur.demarrerMesure();
+
+            System.out.println(capteur.getCoordonneesGPS());
+
+            // Requête SQL pour insérer des données
+            String query = "INSERT INTO Capteur (codeUnique, coordonneesGPS) VALUES (?, ?)";
+
+            try (Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+                preparedStatement.setString(1, nomCapteur); // Code unique
+                preparedStatement.setString(2, capteur.getCoordonneesGPS()); // Coordonnées GPS
+
+                // Exécuter l'insertion
+                int rowsAffected = preparedStatement.executeUpdate();
+                System.out.println(rowsAffected + " ligne(s) insérée(s).");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
         } catch (MalformedURLException e) {
