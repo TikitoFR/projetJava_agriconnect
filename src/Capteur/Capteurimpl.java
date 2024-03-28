@@ -45,6 +45,12 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
             Thread mesure = new Thread(capteur);
             this.mesure=mesure;
             mesure.start();
+        }else if (!capteur.statusCapteur) {
+            capteur.statusCapteur = true;
+            System.out.println("Mesure reprise pour : " + capteur.codeUnique);
+//            synchronized (this) {
+//                mesure.notify();
+//            }
         }
     }
 
@@ -52,7 +58,7 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
     public void arreterMesure() throws RemoteException {
         capteur.statusCapteur = false;
         System.out.println("Mesure arrété pour : " + capteur.codeUnique);
-        //mesure.interrupt();
+//        mesure.interrupt();
     }
 
     @Override
@@ -63,6 +69,7 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
     public void retirerCapteur() throws RemoteException {
         capteur.statusCapteur=false;
         capteur.centrale=null;
+        //mesure.stop();
         System.out.println("Capteur retiré : " + capteur.codeUnique);
     }
 }

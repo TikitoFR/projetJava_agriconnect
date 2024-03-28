@@ -39,7 +39,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             capteur.parametrerCapteur(centrale, intervalle);
             capteur.demarrerMesure();
 
-            System.out.println(capteur.getCoordonneesGPS());
+            //System.out.println(capteur.getCoordonneesGPS());
 
             // Requête SQL pour insérer des données
             String query = "INSERT INTO Capteur (codeUnique, coordonneesGPS) VALUES (?, ?)";
@@ -137,7 +137,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     public void afficherMesures(DataCapteur data) {
         //System.out.println(data);
         this.derniereData = data;
-        System.out.println(derniereData);
+        //System.out.println(derniereData);
     }
 
     public DataCapteur getMesures() {
@@ -146,7 +146,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
 
     public void enregistrerMesures(DataCapteur data ) {
-        System.out.println(data.getTemperature() + " " + data.getHumidite() + " " + data.getCodeUnique());
+        //System.out.println(data.getTemperature() + " " + data.getHumidite() + " " + data.getCodeUnique());
 
         // Requête SQL pour insérer des données, y compris la date et l'heure actuelles
         String query = "INSERT INTO Mesure (codeUnique, dateHeure, temperature, humidite) VALUES (?, ?, ?, ?)";

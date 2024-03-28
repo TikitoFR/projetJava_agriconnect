@@ -35,6 +35,7 @@ public class Capteur implements Runnable {
     @Override
     public void run() {
         while(true) {
+
             while (statusCapteur) {
                 try {
                     Random rand = new Random();
@@ -51,16 +52,21 @@ public class Capteur implements Runnable {
                 }
             }
 
-//            if(statusCapteur) {
-//                this.notify();
-//            } else {
-//                try {
-//                    this.wait();
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
+            System.out.println(statusCapteur);
+
+            while (!statusCapteur){
+                System.out.println("Mesure arretée");
+            }
+
+//            synchronized (this) {
+//                while (!statusCapteur) {
+//                    try {
+//                        wait(); // Attendre jusqu'à ce que le capteur soit relancé
+//                    } catch (InterruptedException e) {
+//                        Thread.currentThread().interrupt();
+//                    }
 //                }
 //            }
-
         }
     }
 }
