@@ -13,9 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ScheduledExecutorService;
 
 import Capteur.DataCapteur;
 import Capteur.CapteurInterface;
+import Arroseur.ArroseurInterface;
 
 public class CentraleGestionimpl extends UnicastRemoteObject implements CentraleGestion{
 
@@ -24,6 +26,8 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     private static final String PASSWORD = "passroot";
 
     private HashMap<String, CapteurInterface> capteurs;
+    private HashMap<Integer, ArroseurInterface> arroseurs;
+    private ScheduledExecutorService executor;
 
     private DataCapteur derniereData;
 
@@ -65,6 +69,27 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void ajouterArroseur(int id, String coordonneesGPS) {
+        ArroseurInterface arroseur = null;
+        try {
+            arroseur = (ArroseurInterface) Naming.lookup("rmi://localhost:1099/arroseur" + id);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        this.arroseurs.put(id, arroseur);
+        try {
+            arroseur.setCoordonneesGPS(coordonneesGPS);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        String message = "L'arroseur " + id + " a été ajouté à la centrale" + "\n";
+        System.out.println(message);
     }
 
     public void retirerCapteur(String nomCapteur) {
@@ -146,7 +171,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
 
     public void enregistrerMesures(DataCapteur data ) {
-        //System.out.println(data.getTemperature() + " " + data.getHumidite() + " " + data.getCodeUnique());
+        System.out.println(data.getTemperature() + " " + data.getHumidite() + " " + data.getCodeUnique());
 
         // Requête SQL pour insérer des données, y compris la date et l'heure actuelles
         String query = "INSERT INTO Mesure (codeUnique, dateHeure, temperature, humidite) VALUES (?, ?, ?, ?)";

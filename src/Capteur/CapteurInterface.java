@@ -12,4 +12,7 @@ public interface CapteurInterface extends java.rmi.Remote {
     public String getCoordonneesGPS() throws java.rmi.RemoteException;
     public boolean getStatus() throws java.rmi.RemoteException;
     public int getIntervalle() throws java.rmi.RemoteException;
+    void setHumidite(int humidite) throws java.rmi.RemoteException;
+
+    //void setTemperature(int temperature);
 }

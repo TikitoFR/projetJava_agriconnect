@@ -15,18 +15,14 @@ public class ServeurCapteur {
             try {
                 java.rmi.Naming.bind("rmi://localhost:1099/Capteur1", capteurImpl);
                 System.out.println("Serveur prêt");
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException | RemoteException e) {
                 throw new RuntimeException(e);
             } catch (AlreadyBoundException e) {
                 try {
                     java.rmi.Naming.rebind("rmi://localhost:1099/Capteur1", capteurImpl);
-                } catch (MalformedURLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (RemoteException ex) {
+                } catch (MalformedURLException | RemoteException ex) {
                     throw new RuntimeException(ex);
                 }
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
             }
         } catch (RemoteException e) {
             throw new RuntimeException(e);

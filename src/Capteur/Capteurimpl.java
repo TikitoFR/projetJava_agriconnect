@@ -31,6 +31,14 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
         return capteur.getStatus();
     }
 
+    public void setHumidite(int humidite) {
+        capteur.humidite += humidite;
+    }
+
+//    public void setTemperature(int temperature) {
+//        capteur.temperature += temperature;
+//    }
+
     @Override
     public void parametrerCapteur(CentraleGestion centrale, int intervalle) throws RemoteException {
         capteur.centrale=centrale;

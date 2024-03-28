@@ -127,7 +127,9 @@ public class Application {
                 System.out.println("10. Désactiver un capteur");
                 System.out.println("-------------------------------------------------");
                 //System.out.println("10. Calculer la moyenne et la tendance pour un capteur"); // A faire
-                System.out.println("12. Quitter");
+                System.out.println("12. Ajouter un arroseur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("13. Quitter");
                 System.out.println("-------------------------------------------------");
                 System.out.print("Votre choix: ");
 
@@ -188,6 +190,17 @@ public class Application {
                         // A faire
                         break;
                     case 12:
+                        System.out.print("Entrez l'ID du nouvel arroseur: ");
+                        int id = scanner.nextInt();
+                        System.out.print("Entrez la latitude de l'arroseur: ");
+                        double latitude = scanner.nextDouble();
+                        System.out.print("Entrez la longitude de l'arroseur: ");
+                        double longitude = scanner.nextDouble();
+                        String coordonneesGPS = String.format("%.1f, %.1f", latitude, longitude);
+                        centrale.ajouterArroseur(id, coordonneesGPS);
+                        System.out.println("Nouveau capteur avec ID " + id + " a été ajouté et activé.");
+                        break;
+                    case 13:
                         quitter = true;
                         break;
                     default:

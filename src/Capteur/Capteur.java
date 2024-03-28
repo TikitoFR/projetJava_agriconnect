@@ -10,6 +10,9 @@ public class Capteur implements Runnable {
     public CentraleGestion centrale;
     public int intervalle;
 
+    double temperature = 25 + Math.round(Math.random() * 15 * 10) / 10.0;
+    double humidite = Math.round(Math.random() * 100 * 10) / 10.0;
+
     public boolean statusCapteur;
 
     public String getNom() {
@@ -32,15 +35,27 @@ public class Capteur implements Runnable {
         centrale.afficherMesures(new DataCapteur(temperature, humidite, this.codeUnique));
     }
 
+    private double measureTemp() {
+        temperature += (Math.random() * 6 - 3);
+        temperature = Math.min(Math.max(temperature, 0), 30);
+        temperature = Math.round(temperature * 100) / 100.0;
+        return temperature;
+    }
+
+    private double measureHumi() {
+        humidite += (Math.random() * 6 - 3);
+        humidite = Math.min(Math.max(humidite, 0), 100);
+        humidite = Math.round(humidite * 100) / 100.0;
+        return humidite;
+    }
+
     @Override
     public void run() {
         while(true) {
 
             while (statusCapteur) {
                 try {
-                    Random rand = new Random();
-                    int plage = 100 - (-20) + 1; // plage de -20 à 100
-                    mesurer(rand.nextInt(plage) - 20, rand.nextInt(101));
+                    mesurer(measureTemp(), measureHumi());
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
