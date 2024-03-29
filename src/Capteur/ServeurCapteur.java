@@ -5,16 +5,20 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import Arroseur.ArroseurImpl;
+import Arroseur.ArroseurInterface;
 import CentralDeGestion.CentraleGestion;
 
 public class ServeurCapteur {
     public static void main(String[] args) {
-        Capteur capteur1 = new Capteur("Capteur1", "48.8566, 2.3522");
+        int id = Math.random() > 0 ? (int) (Math.random() * 1000) : (int) (Math.random() * 1000) * -1;
+        id = id + 1;
+        Capteur capteur1 = new Capteur("Capteur" + id, "48.8566, 2.3522");
         try {
             Capteurimpl capteurImpl = new Capteurimpl(capteur1);
             try {
-                java.rmi.Naming.bind("rmi://localhost:1099/Capteur1", capteurImpl);
-                System.out.println("Serveur prêt");
+                java.rmi.Naming.bind("rmi://localhost:1099/Capteur" + id, capteurImpl);
+                System.out.println("Capteur " + id + " démarré.");
             } catch (MalformedURLException | RemoteException e) {
                 throw new RuntimeException(e);
             } catch (AlreadyBoundException e) {

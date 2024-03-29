@@ -165,10 +165,11 @@ public class Application {
                         centrale.modifierIntervalle(nomCapteur, intervalle);
                         break;
                     case 7:
-                        System.out.print("Entrez le code unique du capteur : ");
-                        nomCapteur = scanner.nextLine();
+                        System.out.print("Entrez le code unique du capteur (ex : 1) : ");
+                        String idCapteur = scanner.nextLine();
                         System.out.print("Entrez l'intervalle de mesure : ");
                         intervalle = Integer.parseInt(scanner.nextLine());
+                        nomCapteur = "Capteur" + idCapteur;
                         centrale.ajouterCapteur(nomCapteur, centrale, intervalle);
                         break;
                     case 8:

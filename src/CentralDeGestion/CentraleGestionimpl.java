@@ -171,7 +171,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
 
     public void enregistrerMesures(DataCapteur data ) {
-        System.out.println(data.getTemperature() + " " + data.getHumidite() + " " + data.getCodeUnique());
+        System.out.println("Temp : " + data.getTemperature() + " | Humi : " + data.getHumidite() + " | Nom : " + data.getCodeUnique());
 
         // Requête SQL pour insérer des données, y compris la date et l'heure actuelles
         String query = "INSERT INTO Mesure (codeUnique, dateHeure, temperature, humidite) VALUES (?, ?, ?, ?)";
