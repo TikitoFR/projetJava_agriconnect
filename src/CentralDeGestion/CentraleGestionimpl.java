@@ -34,6 +34,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     public CentraleGestionimpl() throws RemoteException {
         super();
         this.capteurs = new HashMap<>();
+        this.arroseurs = new HashMap<>();
     }
 
     public void ajouterCapteur(String nomCapteur, CentraleGestion centrale, int intervalle) {
@@ -82,7 +83,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        this.arroseurs.put(id, arroseur);
+        arroseurs.put(id, arroseur);
         try {
             arroseur.setCoordonneesGPS(coordonneesGPS);
         } catch (RemoteException e) {

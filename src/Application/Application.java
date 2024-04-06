@@ -92,6 +92,36 @@ public class Application {
         }
     }
 
+    public static void getMoyenne(String codeUnique, Connection conn) throws SQLException {
+        StringBuilder result = new StringBuilder();
+
+        CallableStatement moyenne = conn.prepareCall("{call CalculerMoyenneParMinute(?, ?, ?, ?, ?, ?, ?)}");
+        moyenne.setString(1, codeUnique);
+        moyenne.registerOutParameter(2, Types.DATE);
+        moyenne.registerOutParameter(3, Types.DECIMAL);
+        moyenne.registerOutParameter(4, Types.DOUBLE);
+        moyenne.registerOutParameter(5, Types.DATE);
+        moyenne.registerOutParameter(6, Types.DOUBLE);
+        moyenne.registerOutParameter(7, Types.DOUBLE);
+        moyenne.executeQuery();
+
+        double moyenneTemperatureN = moyenne.getDouble(3);
+        result.append("moyenne_temperature : ").append(moyenneTemperatureN);
+        double moyenneTemperatureN1 = moyenne.getDouble(6);
+
+        System.out.println(result.toString());
+    }
+
+    private static String getTendance(double n, double n1) {
+        if (n > n1) {
+            return "hausse";
+        } else if (n < n1) {
+            return "baisse";
+        } else {
+            return "stable";
+        }
+    }
+
 
     public static void main(String[] args) {
         try {
@@ -129,7 +159,9 @@ public class Application {
                 //System.out.println("10. Calculer la moyenne et la tendance pour un capteur"); // A faire
                 System.out.println("12. Ajouter un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("13. Quitter");
+                System.out.println("13. Obtenir moyenne et tendance");
+                System.out.println("-------------------------------------------------");
+                System.out.println("14. Quitter");
                 System.out.println("-------------------------------------------------");
                 System.out.print("Votre choix: ");
 
@@ -202,6 +234,11 @@ public class Application {
                         System.out.println("Nouveau capteur avec ID " + id + " a été ajouté et activé.");
                         break;
                     case 13:
+                        System.out.print("Entrez le code unique du capteur: ");
+                        codeCapteur = scanner.nextLine();
+                        getMoyenne(codeCapteur, conn);
+                        break;
+                    case 14:
                         quitter = true;
                         break;
                     default:
