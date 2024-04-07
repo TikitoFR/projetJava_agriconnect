@@ -94,32 +94,35 @@ public class Application {
 
     public static void getMoyenne(String codeUnique, Connection conn) throws SQLException {
         StringBuilder result = new StringBuilder();
+        String periode = "last_hour";
 
-        CallableStatement moyenne = conn.prepareCall("{call CalculerMoyenneParMinute(?, ?, ?, ?, ?, ?, ?)}");
-        moyenne.setString(1, codeUnique);
-        moyenne.registerOutParameter(2, Types.DATE);
-        moyenne.registerOutParameter(3, Types.DECIMAL);
-        moyenne.registerOutParameter(4, Types.DOUBLE);
-        moyenne.registerOutParameter(5, Types.DATE);
-        moyenne.registerOutParameter(6, Types.DOUBLE);
-        moyenne.registerOutParameter(7, Types.DOUBLE);
-        moyenne.executeQuery();
+        // Appel de la procédure stockée
+        CallableStatement moyenne = conn.prepareCall("{call GetSensorStats(?, ?)}");
+        moyenne.setString(1, "Capteur" + codeUnique);
+        moyenne.setString(2, periode);
 
-        double moyenneTemperatureN = moyenne.getDouble(3);
-        result.append("moyenne_temperature : ").append(moyenneTemperatureN);
-        double moyenneTemperatureN1 = moyenne.getDouble(6);
+        // Exécution de la requête
+        ResultSet rs = moyenne.executeQuery();
 
-        System.out.println(result.toString());
-    }
+        // Traitement des résultats
+        while (rs.next()) {
+            double avgTemperature = rs.getDouble("avg_temperature");
+            double avgHumidity = rs.getDouble("avg_humidity");
+            String temperatureTrend = rs.getString("temperature_trend");
+            String humidityTrend = rs.getString("humidity_trend");
 
-    private static String getTendance(double n, double n1) {
-        if (n > n1) {
-            return "hausse";
-        } else if (n < n1) {
-            return "baisse";
-        } else {
-            return "stable";
+            result.append("Moyenne de température: ").append(avgTemperature).append("\n");
+            result.append("Moyenne d'humidité: ").append(avgHumidity).append("\n");
+            result.append("Tendance de température: ").append(temperatureTrend).append("\n");
+            result.append("Tendance d'humidité: ").append(humidityTrend).append("\n");
         }
+
+        // Affichage du résultat
+        System.out.println(result.toString());
+
+        // Fermeture des ressources
+        rs.close();
+        moyenne.close();
     }
 
 
