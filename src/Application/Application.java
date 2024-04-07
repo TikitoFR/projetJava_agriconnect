@@ -1,5 +1,6 @@
 package Application;
 
+import Capteur.CapteurInterface;
 import Capteur.DataCapteur;
 import CentralDeGestion.CentraleGestion;
 
@@ -56,19 +57,6 @@ public class Application {
         }
     }
 
-//    public static void getMesures() throws RemoteException {
-//
-//        Scanner scanner = new Scanner(System.in);
-//        boolean continuer = true;
-//
-//        System.out.println("Appuyez sur une touche pour arrêter la récupération des mesures...");
-//        String input = scanner.nextLine();
-//        while (input.isEmpty()) {
-//            DataCapteur data = centrale.getMesures();
-//            System.out.println(data);
-//        }
-//    }
-
     public static void getMesures() throws RemoteException {
 
         Scanner scanner = new Scanner(System.in);
@@ -92,9 +80,8 @@ public class Application {
         }
     }
 
-    public static void getMoyenne(String codeUnique, Connection conn) throws SQLException {
+    public static void getMoyenne(String codeUnique, String periode, Connection conn) throws SQLException {
         StringBuilder result = new StringBuilder();
-        String periode = "last_hour";
 
         // Appel de la procédure stockée
         CallableStatement moyenne = conn.prepareCall("{call GetSensorStats(?, ?)}");
@@ -159,12 +146,11 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("10. Désactiver un capteur");
                 System.out.println("-------------------------------------------------");
-                //System.out.println("10. Calculer la moyenne et la tendance pour un capteur"); // A faire
                 System.out.println("12. Ajouter un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("13. Obtenir moyenne et tendance");
+                System.out.println("13. Obtenir moyenne et tendance d'un capteur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("14. Quitter");
+                System.out.println("14. Activer un arroseur");
                 System.out.println("-------------------------------------------------");
                 System.out.print("Votre choix: ");
 
@@ -183,12 +169,12 @@ public class Application {
                         break;
                     case 4:
                         System.out.print("Entrez le code unique du capteur: ");
-                        String codeCapteur = scanner.nextLine();
-                        afficherMesures(conn, codeCapteur);
+                        String nomCapteur = scanner.nextLine();
+                        afficherMesures(conn, nomCapteur);
                         break;
                     case 5:
                         System.out.print("Entrez le code unique du capteur : ");
-                        String nomCapteur = scanner.nextLine();
+                        nomCapteur = scanner.nextLine();
                         List<String> listeCapteur = centrale.afficherInformationsCapteur(nomCapteur);
                         System.out.println(listeCapteur.get(0));
                         break;
@@ -201,10 +187,9 @@ public class Application {
                         break;
                     case 7:
                         System.out.print("Entrez le code unique du capteur (ex : 1) : ");
-                        String idCapteur = scanner.nextLine();
+                        nomCapteur = scanner.nextLine();
                         System.out.print("Entrez l'intervalle de mesure : ");
                         intervalle = Integer.parseInt(scanner.nextLine());
-                        nomCapteur = "Capteur" + idCapteur;
                         centrale.ajouterCapteur(nomCapteur, centrale, intervalle);
                         break;
                     case 8:
@@ -238,10 +223,26 @@ public class Application {
                         break;
                     case 13:
                         System.out.print("Entrez le code unique du capteur: ");
-                        codeCapteur = scanner.nextLine();
-                        getMoyenne(codeCapteur, conn);
+                        nomCapteur = scanner.nextLine();
+                        System.out.print("Sur la derniere heure -> 1 \n");
+                        System.out.print("Sur la derniere journée -> 2 \n");
+                        choix = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (choix){
+                            case 1 :
+                                getMoyenne(nomCapteur, "last_hour", conn);
+                                break;
+                            case 2 :
+                                getMoyenne(nomCapteur, "last_day", conn);
+                                break;
+                        }
                         break;
                     case 14:
+                        System.out.print("Entrez le code unique de l'arroseur : ");
+                        nomCapteur = scanner.nextLine();
+                        centrale.demarrerArroseur(nomCapteur);
+                        break;
+                    case 15:
                         quitter = true;
                         break;
                     default:
