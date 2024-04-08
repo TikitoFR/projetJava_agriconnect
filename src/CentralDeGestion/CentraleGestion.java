@@ -11,7 +11,7 @@ public interface CentraleGestion extends java.rmi.Remote {
     public void ajouterArroseur(int id, String coordonneesGPS) throws java.rmi.RemoteException;
     public void retirerCapteur(String nomCapteur) throws java.rmi.RemoteException;
     public void demarrerMesure(String nomCapteur) throws java.rmi.RemoteException;
-    public void demarrerArroseur(String nomCapteur) throws java.rmi.RemoteException;
+    public void demarrerArroseur(String idArroseur, String nomCapteur) throws java.rmi.RemoteException;
     public void arreterMesure(String nomCapteur) throws java.rmi.RemoteException;
     public void modifierIntervalle(String nomCapteur, int intervalle) throws java.rmi.RemoteException;
     public List<String> afficherInformationsCapteur(String nomCapteur) throws java.rmi.RemoteException;

@@ -39,7 +39,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     public void ajouterCapteur(String nomCapteur, CentraleGestion centrale, int intervalle) {
         try {
-            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/capteur" + nomCapteur);
+            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
             capteurs.put(nomCapteur, capteur);
             capteur.parametrerCapteur(centrale, intervalle);
             capteur.demarrerMesure();
@@ -52,7 +52,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             try (Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
                  PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-                preparedStatement.setString(1, nomCapteur); // Code unique
+                preparedStatement.setString(1, "Capteur" + nomCapteur); // Code unique
                 preparedStatement.setString(2, capteur.getCoordonneesGPS()); // Coordonnées GPS
 
                 // Exécuter l'insertion
@@ -95,7 +95,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     public void retirerCapteur(String nomCapteur) {
         try {
-            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/capteur" + nomCapteur);
+            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
             capteurs.remove(nomCapteur);
             capteur.retirerCapteur();
         } catch (NotBoundException e) {
@@ -109,7 +109,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     public void demarrerMesure(String nomCapteur) {
         CapteurInterface capteur = null;
         try {
-            capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/capteur" + nomCapteur);
+            capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
             capteur.demarrerMesure();
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
@@ -120,10 +120,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         }
     }
 
-    public void demarrerArroseur(String nomCapteur) throws RemoteException {
+    public void demarrerArroseur(String idArroseur, String nomCapteur) throws RemoteException {
         ArroseurInterface arroseur = null;
         try {
-            arroseur = (ArroseurInterface) Naming.lookup("rmi://localhost:1099/arroseur" + nomCapteur);
+            arroseur = (ArroseurInterface) Naming.lookup("rmi://localhost:1099/arroseur" + idArroseur);
             arroseur.activer();
             capteurs.get(nomCapteur);
             arroseur.arroser(capteurs.get(nomCapteur));
@@ -137,7 +137,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     public void arreterMesure(String nomCapteur) {
         CapteurInterface capteur = null;
         try {
-            capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/capteur" + nomCapteur);
+            capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
             capteur.arreterMesure();
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
@@ -150,7 +150,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     public void modifierIntervalle(String nomCapteur, int intervalle) {
         try {
-            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/capteur" + nomCapteur);
+            CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
             capteur.modifierIntervalle(intervalle);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);

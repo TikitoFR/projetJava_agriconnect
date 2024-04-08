@@ -13,6 +13,8 @@ public class Capteur implements Runnable {
     double temperature = 25 + Math.round(Math.random() * 15 * 10) / 10.0;
     double humidite = Math.round(Math.random() * 100 * 10) / 10.0;
 
+    private int tempsEcouleEnSecondes = 0;
+
     public boolean statusCapteur;
 
     public String getNom() {
@@ -43,9 +45,13 @@ public class Capteur implements Runnable {
     }
 
     private double measureHumi() {
-        humidite += (Math.random() * 6 - 3);
-        humidite = Math.min(Math.max(humidite, 0), 100);
-        humidite = Math.round(humidite * 100) / 100.0;
+//        humidite += (Math.random() * 6 - 3);
+//        humidite = Math.min(Math.max(humidite, 0), 100);
+//        humidite = Math.round(humidite * 100) / 100.0;
+        tempsEcouleEnSecondes++;
+        if (tempsEcouleEnSecondes % 60 == 0) {
+            humidite *= 0.99; // réduction de 1% toutes les 60 secondes
+        }
         return humidite;
     }
 

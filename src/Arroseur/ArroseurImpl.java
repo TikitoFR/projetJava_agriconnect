@@ -94,6 +94,7 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
         Runnable task = () -> {
             try {
                 capteur.setHumidite(1);
+                System.out.println("Augmentation de l'humidité sur le capteur :" + capteur.getNom());
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

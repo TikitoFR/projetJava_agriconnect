@@ -146,9 +146,11 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("10. Désactiver un capteur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("12. Ajouter un arroseur");
+                System.out.println("11. Ajouter un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("13. Obtenir moyenne et tendance d'un capteur");
+                System.out.println("12. Obtenir moyenne et tendance d'un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("13. Activer un arroseur");
                 System.out.println("-------------------------------------------------");
                 System.out.println("14. Activer un arroseur");
                 System.out.println("-------------------------------------------------");
@@ -208,9 +210,6 @@ public class Application {
                         centrale.arreterMesure(nomCapteur);
                         break;
                     case 11:
-                        // A faire
-                        break;
-                    case 12:
                         System.out.print("Entrez l'ID du nouvel arroseur: ");
                         int id = scanner.nextInt();
                         System.out.print("Entrez la latitude de l'arroseur: ");
@@ -220,6 +219,13 @@ public class Application {
                         String coordonneesGPS = String.format("%.1f, %.1f", latitude, longitude);
                         centrale.ajouterArroseur(id, coordonneesGPS);
                         System.out.println("Nouveau capteur avec ID " + id + " a été ajouté et activé.");
+                        break;
+                    case 12:
+                        System.out.print("Entrez le code unique de l'arroseur : ");
+                        String idArroseur = scanner.nextLine();
+                        System.out.print("Entrez le code unique du capteur a arroser (orientation de l'arrosage) : ");
+                        nomCapteur = scanner.nextLine();
+                        centrale.demarrerArroseur(idArroseur, nomCapteur);
                         break;
                     case 13:
                         System.out.print("Entrez le code unique du capteur: ");
@@ -238,11 +244,6 @@ public class Application {
                         }
                         break;
                     case 14:
-                        System.out.print("Entrez le code unique de l'arroseur : ");
-                        nomCapteur = scanner.nextLine();
-                        centrale.demarrerArroseur(nomCapteur);
-                        break;
-                    case 15:
                         quitter = true;
                         break;
                     default:
