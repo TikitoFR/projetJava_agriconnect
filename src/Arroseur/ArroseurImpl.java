@@ -57,13 +57,13 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     }
 
 
-    public void setSeuilTemp(double seuilTemp) throws RemoteException{
-        this.seuilTemp = seuilTemp;
-    }
-
-    public void setSeuilHumi(double seuilHumi) throws RemoteException{
-        this.seuilHumi = seuilHumi;
-    }
+//    public void setSeuilTemp(double seuilTemp) throws RemoteException{
+//        this.seuilTemp = seuilTemp;
+//    }
+//
+//    public void setSeuilHumi(double seuilHumi) throws RemoteException{
+//        this.seuilHumi = seuilHumi;
+//    }
 
     public void setZone(String zone) throws RemoteException{
         this.zone = zone;

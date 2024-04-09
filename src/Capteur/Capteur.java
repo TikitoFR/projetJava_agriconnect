@@ -1,6 +1,6 @@
 package Capteur;
+
 import java.rmi.RemoteException;
-import java.util.Random;
 
 import CentralDeGestion.CentraleGestion;
 
@@ -50,7 +50,7 @@ public class Capteur implements Runnable {
 //        humidite = Math.round(humidite * 100) / 100.0;
         tempsEcouleEnSecondes++;
         if (tempsEcouleEnSecondes % 60 == 0) {
-            humidite *= 0.99; // réduction de 1% toutes les 60 secondes
+            humidite -= 1; // réduction de 1% toutes les 60 secondes
         }
         return humidite;
     }
@@ -73,21 +73,11 @@ public class Capteur implements Runnable {
                 }
             }
 
-            System.out.println(statusCapteur);
+            //System.out.println(statusCapteur);
 
             while (!statusCapteur){
                 System.out.println("Mesure arretée");
             }
-
-//            synchronized (this) {
-//                while (!statusCapteur) {
-//                    try {
-//                        wait(); // Attendre jusqu'à ce que le capteur soit relancé
-//                    } catch (InterruptedException e) {
-//                        Thread.currentThread().interrupt();
-//                    }
-//                }
-//            }
         }
     }
 }

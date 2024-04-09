@@ -13,6 +13,4 @@ public interface CapteurInterface extends java.rmi.Remote {
     public boolean getStatus() throws java.rmi.RemoteException;
     public int getIntervalle() throws java.rmi.RemoteException;
     void setHumidite(int humidite) throws java.rmi.RemoteException;
-
-    //void setTemperature(int temperature);
 }

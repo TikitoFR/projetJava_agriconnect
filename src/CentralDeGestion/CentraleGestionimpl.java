@@ -228,4 +228,20 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         });
         return listeCapteurs;
     }
+
+    public List<String> getArroseurs() throws RemoteException {
+        List<String> listeArroseurs = new ArrayList<>();
+        this.arroseurs.forEach((idArroseur, arroseur) ->{
+            try {
+                if (arroseur.getStatus()) {
+                    listeArroseurs.add("Arroseur" + arroseur.getId() + " - GPS : " + arroseur.getCoordonneesGPS() + " - Actif");
+                } else {
+                    listeArroseurs.add("Arroseur" + arroseur.getId() + " - GPS : " + arroseur.getCoordonneesGPS() + " - Inactif");
+                }
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return listeArroseurs;
+    }
 }

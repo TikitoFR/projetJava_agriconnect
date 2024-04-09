@@ -1,6 +1,5 @@
 package Application;
 
-import Capteur.CapteurInterface;
 import Capteur.DataCapteur;
 import CentralDeGestion.CentraleGestion;
 
@@ -17,7 +16,6 @@ public class Application {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "passroot";
-
     private static CentraleGestion centrale;
 
     public static void afficherCapteur(Connection conn) throws SQLException {
@@ -54,6 +52,14 @@ public class Application {
         List<String>  listeCapteur = centrale.getCapteurs();
         for(int i=0; i<listeCapteur.size(); i++){
             System.out.println(listeCapteur.get(i));
+        }
+    }
+
+    public static void listerArroseurs() throws RemoteException {
+        System.out.println("Liste des arroseurs:");
+        List<String>  listeArroseur = centrale.getArroseurs();
+        for(int i=0; i<listeArroseur.size(); i++){
+            System.out.println(listeArroseur.get(i));
         }
     }
 
@@ -148,11 +154,15 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("11. Ajouter un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("12. Obtenir moyenne et tendance d'un capteur");
+                System.out.println("12. Activer un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("13. Activer un arroseur");
+                System.out.println("13. Desactiver un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("14. Activer un arroseur");
+                System.out.println("14. Lister les arroseurs connecté sur la centrale");
+                System.out.println("-------------------------------------------------");
+                System.out.println("15. Obtenir moyenne et tendance d'un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("16. Quitter");
                 System.out.println("-------------------------------------------------");
                 System.out.print("Votre choix: ");
 
@@ -228,6 +238,12 @@ public class Application {
                         centrale.demarrerArroseur(idArroseur, nomCapteur);
                         break;
                     case 13:
+                        // A faire
+                        break;
+                    case 14:
+                        listerArroseurs();
+                        break;
+                    case 15:
                         System.out.print("Entrez le code unique du capteur: ");
                         nomCapteur = scanner.nextLine();
                         System.out.print("Sur la derniere heure -> 1 \n");
@@ -243,7 +259,7 @@ public class Application {
                                 break;
                         }
                         break;
-                    case 14:
+                    case 16:
                         quitter = true;
                         break;
                     default:
