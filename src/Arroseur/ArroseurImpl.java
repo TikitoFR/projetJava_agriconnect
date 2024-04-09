@@ -88,7 +88,14 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
             status = false;
         }
     }
+    @Override
+    public void retirerArroseur() throws RemoteException {
+        if (status) {
+            stopArrosage();// Arrête l'arrosage lors de la désactivation
 
+            status = false;
+        }
+    }
     @Override
     public void arroser(CapteurInterface capteur) throws RemoteException {
         System.out.println("Arrosage de la plante...");

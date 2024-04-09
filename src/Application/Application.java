@@ -158,11 +158,13 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("13. Desactiver un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("14. Lister les arroseurs connecté sur la centrale");
+                System.out.println("14. retire un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("15. Obtenir moyenne et tendance d'un capteur");
+                System.out.println("15. Lister les arroseurs connecté sur la centrale");
                 System.out.println("-------------------------------------------------");
-                System.out.println("16. Quitter");
+                System.out.println("16. Obtenir moyenne et tendance d'un capteur");
+                System.out.println("-------------------------------------------------");
+                System.out.println("17. Quitter");
                 System.out.println("-------------------------------------------------");
                 System.out.print("Votre choix: ");
 
@@ -243,9 +245,15 @@ public class Application {
                         centrale.areterArroseur(idArroseur);
                         break;
                     case 14:
-                        listerArroseurs();
+                        System.out.print("Entrez le code unique de l'aroseur : ");
+                        idArroseur = scanner.nextLine();
+                        centrale.retirerArroseur(idArroseur);
+                        System.out.println("Arroseur" +idArroseur+"retiré avec succès.");
                         break;
                     case 15:
+                        listerArroseurs();
+                        break;
+                    case 16:
                         System.out.print("Entrez le code unique du capteur: ");
                         nomCapteur = scanner.nextLine();
                         System.out.print("Sur la derniere heure -> 1 \n");
@@ -261,9 +269,10 @@ public class Application {
                                 break;
                         }
                         break;
-                    case 16:
+                    case 17:
                         quitter = true;
                         break;
+
                     default:
                         System.out.println("Choix invalide, veuillez réessayer.");
                 }

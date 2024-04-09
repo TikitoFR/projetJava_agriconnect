@@ -106,6 +106,28 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
+
+
+    public void retirerArroseur(String idArroseurStr) throws RemoteException   {
+        ArroseurInterface arroseur = null;
+        try {
+            // Conversion de la chaîne en entier
+            int idArroseur = Integer.parseInt(idArroseurStr);
+            arroseur = (ArroseurInterface) Naming.lookup("rmi://localhost:1099/arroseur" + idArroseur);
+            // Utiliser l'entier comme clé pour retirer l'arroseur
+            arroseurs.remove(idArroseur);
+            
+            System.out.println(arroseurs);
+            System.out.println("Arroseur " + idArroseur + " retiré de la centrale");
+            arroseur.retirerArroseur();
+        } catch (NumberFormatException e) {
+            System.err.println("Le format de l'ID de l'arroseur est incorrect.");
+            throw new RuntimeException(e);
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public void demarrerMesure(String nomCapteur) {
         CapteurInterface capteur = null;
         try {

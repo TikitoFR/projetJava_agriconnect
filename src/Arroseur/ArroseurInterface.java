@@ -18,4 +18,5 @@ public interface ArroseurInterface extends Remote {
     void setZone(String terrain) throws RemoteException;
     String getZone() throws RemoteException;
     void stopArrosage() throws RemoteException;
+    void retirerArroseur() throws RemoteException;
 }
