@@ -23,7 +23,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "passroot";
+    private static final String PASSWORD = "azer";
 
     private HashMap<String, CapteurInterface> capteurs;
     private HashMap<Integer, ArroseurInterface> arroseurs;
@@ -147,6 +147,19 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
+    
+    public void areterArroseur(String idArroseur) throws RemoteException  {
+        ArroseurInterface arroseur = null;
+        try {
+            arroseur = (ArroseurInterface) Naming.lookup("rmi://localhost:1099/arroseur" + idArroseur);
+            arroseur.desactiver();
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
 
     public void modifierIntervalle(String nomCapteur, int intervalle) {
         try {
@@ -244,4 +257,5 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         });
         return listeArroseurs;
     }
+
 }

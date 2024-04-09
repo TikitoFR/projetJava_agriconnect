@@ -17,6 +17,9 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     private double seuilTemp;
     private double seuilHumi;
     private boolean status;
+    private ScheduledExecutorService executor; // Référence au niveau de la classe
+
+    
 
     // Constructeur du capteur implémentant les propriétés nécessaires.
     public ArroseurImpl(int id) throws RemoteException {
@@ -25,6 +28,7 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
         this.seuilTemp = 30.0;
         this.seuilHumi = 35.0;
         this.status = false;
+        
     }
 
     // Getters pour les propriétés du capteur.
@@ -79,6 +83,8 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     @Override
     public void desactiver() throws RemoteException {
         if (status) {
+            stopArrosage();// Arrête l'arrosage lors de la désactivation
+
             status = false;
         }
     }
@@ -87,7 +93,7 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     public void arroser(CapteurInterface capteur) throws RemoteException {
         System.out.println("Arrosage de la plante...");
         // Crée un ScheduledExecutorService avec 1 thread.
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor = Executors.newScheduledThreadPool(1);
 
         // Crée une tâche qui incrémente la variable i toutes les 10 secondes.
         // Utilise un tableau pour permettre la modification dans l'expression lambda
@@ -118,4 +124,24 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
             System.out.println("Fin de l'exécution après 2 minutes.");
         }, 2, TimeUnit.MINUTES);
     }
+
+
+    @Override
+    public void stopArrosage() throws RemoteException {
+        if (executor != null) {
+            executor.shutdownNow(); // Essaye d'arrêter toutes les tâches actives
+            try {
+                // Attend que les tâches terminent
+                if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                    System.err.println("Des tâches n'ont pas terminé après l'arrêt.");
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            } finally {
+                executor = null; // Aide au nettoyage
+            }
+            System.out.println("Arrosage arrêté.");
+        }
+
+}
 }

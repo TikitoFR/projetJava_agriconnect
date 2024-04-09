@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Application {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "passroot";
+    private static final String PASSWORD = "azer";
     private static CentraleGestion centrale;
 
     public static void afficherCapteur(Connection conn) throws SQLException {
@@ -238,7 +238,9 @@ public class Application {
                         centrale.demarrerArroseur(idArroseur, nomCapteur);
                         break;
                     case 13:
-                        // A faire
+                        System.out.print("Entrez le code unique du capteur : ");
+                        idArroseur = scanner.nextLine();
+                        centrale.areterArroseur(idArroseur);
                         break;
                     case 14:
                         listerArroseurs();

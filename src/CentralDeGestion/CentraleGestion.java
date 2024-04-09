@@ -18,4 +18,5 @@ public interface CentraleGestion extends java.rmi.Remote {
     public List<String> afficherInformationsCapteur(String nomCapteur) throws java.rmi.RemoteException;
     public void afficherMesures(DataCapteur data) throws java.rmi.RemoteException;
     public DataCapteur getMesures() throws java.rmi.RemoteException;
+    public void areterArroseur(String idArroseur) throws java.rmi.RemoteException;
 }
