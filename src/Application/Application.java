@@ -185,7 +185,7 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("13. Desactiver un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("14. retire un arroseur");
+                System.out.println("14. retirer un arroseur");
                 System.out.println("-------------------------------------------------");
                 System.out.println("15. Lister les arroseurs connecté sur la centrale");
                 System.out.println("-------------------------------------------------");
