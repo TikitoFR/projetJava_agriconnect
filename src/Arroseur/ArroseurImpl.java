@@ -21,7 +21,12 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
 
     
 
-    // Constructeur du capteur implémentant les propriétés nécessaires.
+    
+    /**
+     * Constructeur de l'arroseur initialisant les propriétés nécessaires.
+     * @param id L'identifiant unique de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public ArroseurImpl(int id) throws RemoteException {
         super();
         this.id = id;
@@ -31,31 +36,61 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
         
     }
 
-    // Getters pour les propriétés du capteur.
-    public int getId() throws RemoteException{
+// Méthodes pour récupérer les propriétés de l'arroseur.
+
+    /**
+     * Récupère l'identifiant de l'arroseur.
+     * @return L'identifiant de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */    public int getId() throws RemoteException{
         return id;
     }
-
+ /**
+     * Récupère les coordonnées GPS de l'arroseur.
+     * @return Les coordonnées GPS de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public String getCoordonneesGPS() throws RemoteException{
         return coordonneesGPS;
     }
-
+/**
+     * Récupère le seuil de température de l'arroseur.
+     * @return Le seuil de température de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public double getSeuilTemp() throws RemoteException{
         return seuilTemp;
     }
-
+  /**
+     * Récupère le seuil d'humidité de l'arroseur.
+     * @return Le seuil d'humidité de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public double getSeuilHumi() throws RemoteException{
         return seuilHumi;
     }
-
+ /**
+     * Récupère le statut de l'arroseur.
+     * @return Le statut de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public boolean getStatus() throws RemoteException{
         return status;
     }
-
+  /**
+     * Récupère la zone d'activité de l'arroseur.
+     * @return La zone d'activité de l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public String getZone() throws RemoteException{
         return zone;
     }
 
+    /**
+     * Définit les coordonnées GPS de l'arroseur.
+     * @param coordonneesGPS Les coordonnées GPS à définir.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public void setCoordonneesGPS(String coordonneesGPS) throws RemoteException{
         this.coordonneesGPS = coordonneesGPS;
     }
@@ -79,7 +114,10 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
             status = true;
         }
     }
-
+ /**
+     * Désactive l'arroseur.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     @Override
     public void desactiver() throws RemoteException {
         if (status) {
@@ -96,6 +134,11 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
             status = false;
         }
     }
+     /**
+     * Démarre l'arrosage.
+     * @param capteur Le capteur associé à l'arrosage.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     @Override
     public void arroser(CapteurInterface capteur) throws RemoteException {
         System.out.println("Arrosage de la plante...");
@@ -132,7 +175,10 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
         }, 2, TimeUnit.MINUTES);
     }
 
-
+    /**
+     * Arrête l'arrosage en cours.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     @Override
     public void stopArrosage() throws RemoteException {
         if (executor != null) {

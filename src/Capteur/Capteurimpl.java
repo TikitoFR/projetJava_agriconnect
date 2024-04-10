@@ -4,12 +4,19 @@ import CentralDeGestion.CentraleGestion;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
+/**
+ * Implémentation de l'interface CapteurInterface pour le capteur.
+ * Cette classe permet de gérer les opérations liées au capteur à distance via RMI.
+ */
 public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface {
 
     private Capteur capteur;
     private Thread mesure;
-
+/**
+     * Constructeur de la classe Capteurimpl.
+     * @param capteur L'instance du capteur associée à cette implémentation.
+     * @throws RemoteException En cas d'erreur lors de la communication distante.
+     */
     public Capteurimpl(Capteur capteur) throws RemoteException {
         super();
         this.capteur=capteur;

@@ -15,8 +15,15 @@ import java.util.Scanner;
 public class Application {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "azer";
+    private static final String PASSWORD = "passroot";
     private static CentraleGestion centrale;
+
+    
+    /**
+     * Affiche tous les capteurs enregistrés dans la base de données.
+     * @param conn La connexion à la base de données.
+     * @throws SQLException En cas d'erreur SQL.
+     */
 
     public static void afficherCapteur(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
@@ -29,7 +36,12 @@ public class Application {
             System.out.println("Code unique : " + codeUnique + " | coordonneesGPS : " + coordonneesGPS);
         }
     }
-
+    /**
+     * Affiche les mesures associées à un capteur spécifique.
+     * @param conn La connexion à la base de données.
+     * @param codeUnique Le code unique du capteur.
+     * @throws SQLException En cas d'erreur SQL.
+     */
     public static void afficherMesures(Connection conn, String codeUnique) throws SQLException {
         PreparedStatement statement = conn.prepareStatement("SELECT * FROM Mesure WHERE codeUnique = ?");
         statement.setString(1, codeUnique);
@@ -46,7 +58,10 @@ public class Application {
                     ", Température: " + temperature + "°C, Humidité: " + humidite + "%");
         }
     }
-
+    /**
+     * Affiche la liste des capteurs connectés à la centrale de gestion.
+     * @throws RemoteException En cas d'erreur lors de l'accès distant.
+     */
     public static void listerCapteurs() throws RemoteException {
         System.out.println("Liste des capteurs:");
         List<String>  listeCapteur = centrale.getCapteurs();
@@ -54,7 +69,10 @@ public class Application {
             System.out.println(listeCapteur.get(i));
         }
     }
-
+    /**
+     * Affiche la liste des arroseurs connectés à la centrale de gestion.
+     * @throws RemoteException En cas d'erreur lors de l'accès distant.
+     */
     public static void listerArroseurs() throws RemoteException {
         System.out.println("Liste des arroseurs:");
         List<String>  listeArroseur = centrale.getArroseurs();
@@ -62,7 +80,10 @@ public class Application {
             System.out.println(listeArroseur.get(i));
         }
     }
-
+    /**
+     * Récupère les mesures depuis la centrale de gestion et les affiche.
+     * @throws RemoteException En cas d'erreur lors de l'accès distant.
+     */
     public static void getMesures() throws RemoteException {
 
         Scanner scanner = new Scanner(System.in);
@@ -85,7 +106,13 @@ public class Application {
             input = scanner.nextLine(); // Attendre la prochaine entrée
         }
     }
-
+    /**
+     * Calcule et affiche la moyenne et la tendance des mesures d'un capteur pour une période donnée.
+     * @param codeUnique Le code unique du capteur.
+     * @param periode La période pour laquelle calculer la moyenne et la tendance.
+     * @param conn La connexion à la base de données.
+     * @throws SQLException En cas d'erreur SQL.
+     */
     public static void getMoyenne(String codeUnique, String periode, Connection conn) throws SQLException {
         StringBuilder result = new StringBuilder();
 

@@ -2,10 +2,16 @@ package CentralDeGestion;
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-
+/**
+ * La classe ServeurCentraleDeGestion est responsable de démarrer le serveur RMI pour la centrale de gestion.
+ * Elle lie l'implémentation de la centrale de gestion à un registre RMI.
+ */
 public class ServeurCentraleDeGestion {
     public static void main(String[] args) {
-        
+         /**
+     * Méthode principale permettant de démarrer le serveur RMI pour la centrale de gestion.
+     * @param args Arguments de la ligne de commande (non utilisés dans cette application).
+     */
         CentraleGestionimpl centraleGestionimpl;
         try {
             centraleGestionimpl = new CentraleGestionimpl();

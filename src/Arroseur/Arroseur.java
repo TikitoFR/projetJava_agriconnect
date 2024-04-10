@@ -4,6 +4,11 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 
 public class Arroseur {
+    /**
+     * Méthode principale pour démarrer un nouvel arroseur.
+     * @param args Les arguments de la ligne de commande.
+     * @throws RemoteException En cas d'erreur lors de l'accès distant.
+     */
     public static void main(String[] args) throws RemoteException {
         //System.out.print("Entrez l'ID du nouvelle arroseur : ");
         int id = Math.random() > 0 ? (int) (Math.random() * 1000) : (int) (Math.random() * 1000) * -1;

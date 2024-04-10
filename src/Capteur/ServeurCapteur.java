@@ -4,7 +4,15 @@ import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
+/**
+ * Classe principale pour démarrer un serveur de capteur.
+ * Cette classe crée et démarre un capteur avec un identifiant unique et des coordonnées GPS aléatoires.
+ */
 public class ServeurCapteur {
+    /**
+     * Méthode principale pour démarrer le serveur de capteur.
+     * @param args Arguments de la ligne de commande (non utilisés).
+     */
     public static void main(String[] args) {
         int id = Math.random() > 0 ? (int) (Math.random() * 1000) : (int) (Math.random() * 1000) * -1;
         id = id + 1;

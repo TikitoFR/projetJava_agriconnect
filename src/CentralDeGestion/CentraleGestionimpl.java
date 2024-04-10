@@ -23,7 +23,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/java_agriconnect?serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "azer";
+    private static final String PASSWORD = "passroot";
 
     private HashMap<String, CapteurInterface> capteurs;
     private HashMap<Integer, ArroseurInterface> arroseurs;
@@ -31,12 +31,22 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     private DataCapteur derniereData;
 
+    /**
+     * Constructeur par défaut de la classe.
+     * Initialise les structures de données pour stocker les capteurs et les arroseurs.
+     * @throws RemoteException En cas d'erreur lors de la création de l'objet distant.
+     */
     public CentraleGestionimpl() throws RemoteException {
         super();
         this.capteurs = new HashMap<>();
         this.arroseurs = new HashMap<>();
     }
-
+  /**
+     * Ajoute un capteur à la centrale de gestion.
+     * @param nomCapteur Le nom du capteur.
+     * @param centrale La centrale de gestion à laquelle le capteur est ajouté.
+     * @param intervalle L'intervalle de mesure du capteur.
+     */
     public void ajouterCapteur(String nomCapteur, CentraleGestion centrale, int intervalle) {
         try {
             CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
@@ -71,7 +81,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
-
+   /**
+     * Ajoute un arroseur à la centrale de gestion.
+     * @param id L'identifiant de l'arroseur.
+     * @param coordonneesGPS Les coordonnées GPS de l'arroseur.
+     */
     public void ajouterArroseur(int id, String coordonneesGPS) {
         ArroseurInterface arroseur = null;
         try {
@@ -93,6 +107,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         System.out.println(message);
     }
 
+    /**
+     * Retire un capteur de la centrale de gestion.
+     * @param nomCapteur Le nom du capteur à retirer.
+     */
     public void retirerCapteur(String nomCapteur) {
         try {
             CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
@@ -106,7 +124,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Retire un arroseur de la centrale de gestion.
+     * @param idArroseurStr L'identifiant de l'arroseur à retirer.
+     * @throws RemoteException En cas d'erreur de communication avec l'arroseur distant.
+     */
 
     public void retirerArroseur(String idArroseurStr) throws RemoteException   {
         ArroseurInterface arroseur = null;
@@ -128,6 +150,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         }
     }
     
+    /**
+     * Démarre la mesure d'un capteur spécifié.
+     * @param nomCapteur Le nom du capteur dont la mesure doit démarrer.
+     */
     public void demarrerMesure(String nomCapteur) {
         CapteurInterface capteur = null;
         try {
@@ -141,7 +167,12 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
-
+ /**
+     * Démarre un arroseur spécifié.
+     * @param idArroseur L'identifiant de l'arroseur à démarrer.
+     * @param nomCapteur Le nom du capteur associé à l'arroseur.
+     * @throws RemoteException En cas d'erreur de communication avec l'arroseur distant.
+     */
     public void demarrerArroseur(String idArroseur, String nomCapteur) throws RemoteException {
         ArroseurInterface arroseur = null;
         try {
@@ -155,7 +186,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
-
+ /**
+     * Arrête la mesure d'un capteur spécifié.
+     * @param nomCapteur Le nom du capteur dont la mesure doit être arrêtée.
+     */
     public void arreterMesure(String nomCapteur) {
         CapteurInterface capteur = null;
         try {
@@ -169,7 +203,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
-    
+     /**
+     * Arrête un arroseur spécifié.
+     * @param idArroseur L'identifiant de l'arroseur à arrêter.
+     * @throws RemoteException En cas d'erreur de communication avec l'arroseur distant.
+     */
     public void areterArroseur(String idArroseur) throws RemoteException  {
         ArroseurInterface arroseur = null;
         try {
@@ -183,6 +221,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     }
     
 
+    /**
+     * Modifie l'intervalle de mesure d'un capteur spécifié.
+     * @param nomCapteur Le nom du capteur dont l'intervalle doit être modifié.
+     * @param intervalle Le nouvel intervalle de mesure.
+     */
     public void modifierIntervalle(String nomCapteur, int intervalle) {
         try {
             CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
@@ -195,7 +238,12 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
             throw new RuntimeException(e);
         }
     }
-
+ /**
+     * Affiche les informations d'un capteur spécifié.
+     * @param nomCapteur Le nom du capteur dont les informations doivent être affichées.
+     * @return Une liste contenant les informations du capteur.
+     * @throws RemoteException En cas d'erreur de communication avec le capteur distant.
+     */
     public List<String> afficherInformationsCapteur(String nomCapteur) throws RemoteException {
         List<String> listeCapteurs = new ArrayList<String>();
         this.capteurs.get(nomCapteur);
@@ -208,7 +256,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         }
         return listeCapteurs;
     }
-
+ /**
+     * Affiche les dernières mesures reçues par la centrale de gestion.
+     * @param data Les données de capteur contenant les mesures à afficher.
+     */
     public void afficherMesures(DataCapteur data) {
         //System.out.println(data);
         this.derniereData = data;
@@ -218,7 +269,10 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     public DataCapteur getMesures() {
         return derniereData;
     }
-
+ /**
+     * Enregistre les mesures dans la base de données.
+     * @param data Les données de capteur contenant les mesures à enregistrer.
+     */
 
     public void enregistrerMesures(DataCapteur data ) {
         System.out.println("Temp : " + data.getTemperature() + " | Humi : " + data.getHumidite() + " | Nom : " + data.getCodeUnique());
@@ -248,6 +302,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         }
     }
 
+    /**
+     * Récupère la liste des capteurs enregistrés dans la centrale de gestion.
+     * @return La liste des capteurs avec leurs informations.
+     * @throws RemoteException En cas d'erreur de communication avec les capteurs distants.
+     */
     public List<String> getCapteurs() throws RemoteException {
         List<String> listeCapteurs = new ArrayList<String>();
         this.capteurs.forEach((nomCapteur, capteur)->{
@@ -263,7 +322,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         });
         return listeCapteurs;
     }
-
+ /**
+     * Récupère la liste des arroseurs enregistrés dans la centrale de gestion.
+     * @return La liste des arroseurs avec leurs informations.
+     * @throws RemoteException En cas d'erreur de communication avec les arroseurs distants.
+     */
     public List<String> getArroseurs() throws RemoteException {
         List<String> listeArroseurs = new ArrayList<>();
         this.arroseurs.forEach((idArroseur, arroseur) ->{
