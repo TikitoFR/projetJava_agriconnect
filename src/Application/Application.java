@@ -44,7 +44,7 @@ public class Application {
      */
     public static void afficherMesures(Connection conn, String codeUnique) throws SQLException {
         PreparedStatement statement = conn.prepareStatement("SELECT * FROM Mesure WHERE codeUnique = ?");
-        statement.setString(1, codeUnique);
+        statement.setString(1, "Capteur" + codeUnique);
         ResultSet mesures = statement.executeQuery();
 
         while (mesures.next()) {
@@ -185,7 +185,7 @@ public class Application {
                 System.out.println("-------------------------------------------------");
                 System.out.println("13. Desactiver un arroseur");
                 System.out.println("-------------------------------------------------");
-                System.out.println("14. retirer un arroseur");
+                System.out.println("14. Retirer un arroseur");
                 System.out.println("-------------------------------------------------");
                 System.out.println("15. Lister les arroseurs connecté sur la centrale");
                 System.out.println("-------------------------------------------------");
@@ -267,12 +267,12 @@ public class Application {
                         centrale.demarrerArroseur(idArroseur, nomCapteur);
                         break;
                     case 13:
-                        System.out.print("Entrez le code unique du capteur : ");
+                        System.out.print("Entrez le code unique de l'arroseur : ");
                         idArroseur = scanner.nextLine();
                         centrale.areterArroseur(idArroseur);
                         break;
                     case 14:
-                        System.out.print("Entrez le code unique de l'aroseur : ");
+                        System.out.print("Entrez le code unique de l'arroseur : ");
                         idArroseur = scanner.nextLine();
                         centrale.retirerArroseur(idArroseur);
                         System.out.println("Arroseur" +idArroseur+"retiré avec succès.");
@@ -299,7 +299,6 @@ public class Application {
                     case 17:
                         quitter = true;
                         break;
-
                     default:
                         System.out.println("Choix invalide, veuillez réessayer.");
                 }

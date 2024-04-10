@@ -105,9 +105,6 @@ public class Capteur implements Runnable {
                     System.out.println("Thread interrompu");
                 }
             }
-
-            //System.out.println(statusCapteur);
-
             while (!statusCapteur){
                 System.out.println("Mesure arretée");
             }

@@ -27,8 +27,6 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
 
     private HashMap<String, CapteurInterface> capteurs;
     private HashMap<Integer, ArroseurInterface> arroseurs;
-    private ScheduledExecutorService executor;
-
     private DataCapteur derniereData;
 
     /**
@@ -49,12 +47,11 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
      */
     public void ajouterCapteur(String nomCapteur, CentraleGestion centrale, int intervalle) {
         try {
+            // lookup permettant de contacter le capteur distant
             CapteurInterface capteur = (CapteurInterface) Naming.lookup("rmi://localhost:1099/Capteur" + nomCapteur);
             capteurs.put(nomCapteur, capteur);
             capteur.parametrerCapteur(centrale, intervalle);
             capteur.demarrerMesure();
-
-            //System.out.println(capteur.getCoordonneesGPS());
 
             // Requête SQL pour insérer des données
             String query = "INSERT INTO Capteur (codeUnique, coordonneesGPS) VALUES (?, ?)";
@@ -89,6 +86,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
     public void ajouterArroseur(int id, String coordonneesGPS) {
         ArroseurInterface arroseur = null;
         try {
+            // Permet de contacter l'arroseur passé en parametre
             arroseur = (ArroseurInterface) Naming.lookup("rmi://localhost:1099/arroseur" + id);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
@@ -261,9 +259,7 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
      * @param data Les données de capteur contenant les mesures à afficher.
      */
     public void afficherMesures(DataCapteur data) {
-        //System.out.println(data);
         this.derniereData = data;
-        //System.out.println(derniereData);
     }
 
     public DataCapteur getMesures() {
@@ -342,5 +338,4 @@ public class CentraleGestionimpl extends UnicastRemoteObject implements Centrale
         });
         return listeArroseurs;
     }
-
 }

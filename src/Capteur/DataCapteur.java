@@ -1,4 +1,6 @@
 package Capteur;
+
+// Permet la mise en forme des données envoyer par les capteurs
 public class DataCapteur implements java.io.Serializable{
     public double temperature;
     public double humidite;

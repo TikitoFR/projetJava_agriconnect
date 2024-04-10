@@ -42,12 +42,16 @@ public class Capteurimpl extends UnicastRemoteObject implements CapteurInterface
         capteur.humidite += humidite;
     }
 
+
+    // Methode permettant de parametrer le capteur depuis la centrale
     @Override
     public void parametrerCapteur(CentraleGestion centrale, int intervalle) throws RemoteException {
         capteur.centrale=centrale;
         capteur.intervalle=intervalle;
     }
 
+
+    // Methode perettant le demarrage des mesures sur le capteur
     @Override
     public void demarrerMesure() throws RemoteException {
         if (mesure==null) {

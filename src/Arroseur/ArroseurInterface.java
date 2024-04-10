@@ -11,12 +11,8 @@ public interface ArroseurInterface extends Remote {
     String getCoordonneesGPS()throws RemoteException;
     int getId()throws RemoteException;
     boolean getStatus()throws RemoteException;
-    double getSeuilTemp()throws RemoteException;
-    double getSeuilHumi()throws RemoteException;
     void arroser(CapteurInterface capteur) throws RemoteException;
     void setCoordonneesGPS(String coordonneesGPS) throws RemoteException;
-    void setZone(String terrain) throws RemoteException;
-    String getZone() throws RemoteException;
     void stopArrosage() throws RemoteException;
     void retirerArroseur() throws RemoteException;
 }

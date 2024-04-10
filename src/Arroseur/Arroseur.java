@@ -10,11 +10,12 @@ public class Arroseur {
      * @throws RemoteException En cas d'erreur lors de l'accès distant.
      */
     public static void main(String[] args) throws RemoteException {
-        //System.out.print("Entrez l'ID du nouvelle arroseur : ");
+        // Génération d'un numero d'arroseur aléatoire
         int id = Math.random() > 0 ? (int) (Math.random() * 1000) : (int) (Math.random() * 1000) * -1;
         id = id + 1;
         ArroseurInterface nouveauArroseur = new ArroseurImpl(id);
         try {
+            // Bind de l'arroseur crée
             Naming.rebind("rmi://localhost:1099/arroseur" + id , nouveauArroseur);
             System.out.println("Arroseur " + id + " démarré.");
         } catch (Exception e) {

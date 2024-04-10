@@ -13,15 +13,10 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     private int id;
     // Coordonnées géographiques du capteur.
     private String coordonneesGPS;
-    private String zone;
-    private double seuilTemp;
-    private double seuilHumi;
+    // Status de l'arroseur
     private boolean status;
     private ScheduledExecutorService executor; // Référence au niveau de la classe
 
-    
-
-    
     /**
      * Constructeur de l'arroseur initialisant les propriétés nécessaires.
      * @param id L'identifiant unique de l'arroseur.
@@ -30,10 +25,7 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     public ArroseurImpl(int id) throws RemoteException {
         super();
         this.id = id;
-        this.seuilTemp = 30.0;
-        this.seuilHumi = 35.0;
         this.status = false;
-        
     }
 
 // Méthodes pour récupérer les propriétés de l'arroseur.
@@ -53,22 +45,7 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
     public String getCoordonneesGPS() throws RemoteException{
         return coordonneesGPS;
     }
-/**
-     * Récupère le seuil de température de l'arroseur.
-     * @return Le seuil de température de l'arroseur.
-     * @throws RemoteException En cas d'erreur lors de la communication distante.
-     */
-    public double getSeuilTemp() throws RemoteException{
-        return seuilTemp;
-    }
-  /**
-     * Récupère le seuil d'humidité de l'arroseur.
-     * @return Le seuil d'humidité de l'arroseur.
-     * @throws RemoteException En cas d'erreur lors de la communication distante.
-     */
-    public double getSeuilHumi() throws RemoteException{
-        return seuilHumi;
-    }
+
  /**
      * Récupère le statut de l'arroseur.
      * @return Le statut de l'arroseur.
@@ -76,14 +53,6 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
      */
     public boolean getStatus() throws RemoteException{
         return status;
-    }
-  /**
-     * Récupère la zone d'activité de l'arroseur.
-     * @return La zone d'activité de l'arroseur.
-     * @throws RemoteException En cas d'erreur lors de la communication distante.
-     */
-    public String getZone() throws RemoteException{
-        return zone;
     }
 
     /**
@@ -93,19 +62,6 @@ public class ArroseurImpl extends UnicastRemoteObject implements ArroseurInterfa
      */
     public void setCoordonneesGPS(String coordonneesGPS) throws RemoteException{
         this.coordonneesGPS = coordonneesGPS;
-    }
-
-
-//    public void setSeuilTemp(double seuilTemp) throws RemoteException{
-//        this.seuilTemp = seuilTemp;
-//    }
-//
-//    public void setSeuilHumi(double seuilHumi) throws RemoteException{
-//        this.seuilHumi = seuilHumi;
-//    }
-
-    public void setZone(String zone) throws RemoteException{
-        this.zone = zone;
     }
 
     @Override

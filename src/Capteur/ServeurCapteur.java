@@ -20,6 +20,7 @@ public class ServeurCapteur {
         try {
             Capteurimpl capteurImpl = new Capteurimpl(capteur1);
             try {
+                // Bind du capteur sur l'annuaire
                 java.rmi.Naming.bind("rmi://localhost:1099/Capteur" + id, capteurImpl);
                 System.out.println("Capteur " + id + " démarré.");
             } catch (MalformedURLException | RemoteException e) {

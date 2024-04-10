@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
  */
 public class ServeurCentraleDeGestion {
     public static void main(String[] args) {
-         /**
+        /**
      * Méthode principale permettant de démarrer le serveur RMI pour la centrale de gestion.
      * @param args Arguments de la ligne de commande (non utilisés dans cette application).
      */
@@ -18,7 +18,6 @@ public class ServeurCentraleDeGestion {
             try {
                 java.rmi.registry.LocateRegistry.createRegistry(1099);
                 java.rmi.Naming.bind("rmi://localhost:1099/CentraleGestion", centraleGestionimpl);
-                //CentraleGestion centrale = (CentraleGestion) Naming.lookup("rmi://localhost:1099/CentraleGestion");
                 System.out.println("Serveur prêt");
 
             } catch (MalformedURLException e) {
